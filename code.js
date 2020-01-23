@@ -14,7 +14,8 @@ const grey_96 = "S:d0d23f021daa2ea97f7495e70df5878e4ba577d3,1745:77"
 
 // ------------------------------------FIND OBJECTS------------------------------------
 
-const allSelection = figma.currentPage.selection[0].findAll()
+var allSelection = figma.currentPage.selection[0].findAll()
+allSelection.unshift(figma.currentPage.selection[0])
 
 // ------------------------------------REPLACE COLORS----------------------------------
 for (let index in allSelection) {
@@ -28,12 +29,16 @@ for (let index in allSelection) {
         frame.fillStyleId = blue_night;
     }
     //bg
-    if (frame.fillStyleId == white && frame.type == "VECTOR" && frame.width >= 320) {
+    if (frame.fillStyleId == white && frame.type == "VECTOR" && frame.width > 200) {
         frame.fillStyleId = grey_20;
     }
 
     if (frame.fillStyleId == white && (frame.type == "FRAME" || frame.type == "INSTANCE")) {
         frame.fillStyleId = grey_20;
+    }
+
+    if (frame.backgroundStyleId == white && (frame.type == "FRAME" || frame.type == "INSTANCE")) {
+        frame.backgroundStyleId = grey_20;
     }
 
     if (frame.fillStyleId == white && frame.type == "RECTANGLE") {
@@ -42,6 +47,10 @@ for (let index in allSelection) {
 
     if (frame.fillStyleId == grey_80 && frame.type == "VECTOR") {
         frame.fillStyleId = grey_40;
+    }
+
+    if (frame.fillStyleId == grey_96 && (frame.type == "FRAME" || frame.type == "INSTANCE")) {
+        frame.fillStyleId = grey_30;
     }
 
     //text
@@ -56,7 +65,11 @@ for (let index in allSelection) {
     if (frame.fillStyleId == blue_day && frame.type == "TEXT") {
         frame.fillStyleId = blue_night;
     }
-    
+
+    //icons
+    if (frame.fillStyleId == grey_30 && (frame.type == "BOOLEAN_OPERATION" || frame.type == "VECTOR")) {
+        frame.fillStyleId = grey_80;
+    }
 }
 
 // Close plugin
