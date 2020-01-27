@@ -55,64 +55,31 @@ const buttons_accent_night = "S:370b6f6710b3d3433a2b9be108faa7b60f77be2a,4260:11
 const buttons_gp_day = "S:8505cd0a02441a477aeeceb3a6c4da157855454a,4260:13"
 const buttons_gp_night = "S:cdf1657be0c730cb7ec0bc885951e794f81dc243,4260:15"
 
+// -------------------------------ERROR NOTIFICATION------------------------------------
+if (figma.currentPage.selection.length == 0) {
+    figma.closePlugin("🤔 You are not selected items.")
+} else {
+    var allSelection = figma.currentPage.selection[0].findAll()
+    allSelection.unshift(figma.currentPage.selection[0])
+}
+
 // ------------------------------------FIND OBJECTS------------------------------------
 
-var allSelection = figma.currentPage.selection[0].findAll()
-allSelection.unshift(figma.currentPage.selection[0])
+// var allSelection = figma.currentPage.selection[0].findAll()
+// allSelection.unshift(figma.currentPage.selection[0])
 
 // ------------------------------------REPLACE COLORS----------------------------------
 for (let index in allSelection) {
     let frame = allSelection[index];
-    //buttons
-    if (frame.backgroundStyleId == blue_day && frame.type == "INSTANCE") {
-        frame.backgroundStyleId = blue_night;
+
+    //Text
+    if (frame.fillStyleId == text_primary_day) {
+        frame.fillStyleId = text_primary_night;
+    }
+    if (frame.fillStyleId == text_secondary_day) {
+        frame.fillStyleId = text_secondary_night;
     }
 
-    if (frame.fillStyleId == blue_day && (frame.type == "VECTOR" || frame.type == "RECTANGLE")) {
-        frame.fillStyleId = blue_night;
-    }
-    //bg
-    if (frame.fillStyleId == white && frame.type == "VECTOR" && frame.width > 200) {
-        frame.fillStyleId = grey_20;
-    }
-
-    if (frame.fillStyleId == white && (frame.type == "FRAME" || frame.type == "INSTANCE")) {
-        frame.fillStyleId = grey_20;
-    }
-
-    if (frame.backgroundStyleId == white && (frame.type == "FRAME" || frame.type == "INSTANCE")) {
-        frame.backgroundStyleId = grey_20;
-    }
-
-    if (frame.fillStyleId == white && frame.type == "RECTANGLE") {
-        frame.fillStyleId = grey_20;
-    }
-
-    if (frame.fillStyleId == grey_80 && frame.type == "VECTOR") {
-        frame.fillStyleId = grey_40;
-    }
-
-    if (frame.fillStyleId == grey_96 && (frame.type == "FRAME" || frame.type == "INSTANCE")) {
-        frame.fillStyleId = grey_30;
-    }
-
-    //text
-    if (frame.fillStyleId == black && frame.type == "TEXT") {
-        frame.fillStyleId = grey_80;
-    }
-
-    if (frame.fillStyleId == grey_30 && frame.type == "TEXT") {
-        frame.fillStyleId = grey_80;
-    }
-
-    if (frame.fillStyleId == blue_day && frame.type == "TEXT") {
-        frame.fillStyleId = blue_night;
-    }
-
-    //icons
-    if (frame.fillStyleId == grey_30 && (frame.type == "BOOLEAN_OPERATION" || frame.type == "VECTOR")) {
-        frame.fillStyleId = grey_80;
-    }
 }
 
 // Close plugin
