@@ -57,30 +57,34 @@ const buttons_gp_night = "S:cdf1657be0c730cb7ec0bc885951e794f81dc243,4260:15"
 
 // -------------------------------ERROR NOTIFICATION------------------------------------
 if (figma.currentPage.selection.length == 0) {
-    figma.closePlugin("🤔 You are not selected items.")
+    figma.closePlugin("🤔 No object selected.")
 } else {
     var allSelection = figma.currentPage.selection[0].findAll()
     allSelection.unshift(figma.currentPage.selection[0])
-}
-
-// ------------------------------------FIND OBJECTS------------------------------------
-
-// var allSelection = figma.currentPage.selection[0].findAll()
-// allSelection.unshift(figma.currentPage.selection[0])
+    var allObjectsCount = allSelection.length
 
 // ------------------------------------REPLACE COLORS----------------------------------
-for (let index in allSelection) {
-    let frame = allSelection[index];
+    for (let index in allSelection) {
+        let frame = allSelection[index];
+        var counter = 0;
 
-    //Text
-    if (frame.fillStyleId == text_primary_day) {
-        frame.fillStyleId = text_primary_night;
-    }
-    if (frame.fillStyleId == text_secondary_day) {
-        frame.fillStyleId = text_secondary_night;
+        //Text
+        if (frame.fillStyleId == text_primary_day) {
+            frame.fillStyleId = text_primary_night
+            counter++
+        }
+        if (frame.fillStyleId == text_secondary_day) {
+            frame.fillStyleId = text_secondary_night
+            counter++
+        }
+
     }
 
+    // Calculate unchanged objects
+    var unchanedObjects = allObjectsCount-counter
+
+    // Close plugin
+    figma.closePlugin(`🌑 Dark!`)
+    // figma.closePlugin(`🌑 Dark! Unchanged: ${unchanedObjects}`)
 }
-
-// Close plugin
-figma.closePlugin();
+figma.closePlugin()
