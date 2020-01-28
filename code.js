@@ -20,7 +20,7 @@ const actions_attention_day = "S:796f3331c5aed232ed8dcb33899b2c1d7e630a8f,4248:2
 const actions_attention_night = "S:691d81d027815e4d666d1324d308b38450dee4e5,4248:24"
 
 //BG
-const bg_primary_day = "S:9bd11703320c3134910979aea3b38a6d5fd90653,4246:2"
+const bg_primary_day = "S:e1a2d66a7b683f05a2e8752ece127db0d4322756,4248:50"
 const bg_primary_night = "S:dfafa66499e5e8052454d129fd232da41a9d05b2,4248:52"
 
 const bg_secondary_day = "S:61fb74a6cb3712bcdefbae662f136cea9f4b02cb,4248:54"
@@ -85,6 +85,10 @@ if (figma.currentPage.selection.length == 0) {
             frame.fillStyleId = text_buttons_night
             counter++
         }
+        if (frame.fillStyleId == actions_buttons_day) {
+            frame.fillStyleId = actions_buttons_night
+            counter++
+        }
         if (frame.fillStyleId == actions_attention_day) {
             frame.fillStyleId = actions_attention_night
             counter++
@@ -145,7 +149,7 @@ if (figma.currentPage.selection.length == 0) {
     var unchanedObjects = allObjectsCount-counter
 
     // Close plugin
-    figma.closePlugin(`🌑 Dark!`)
+    figma.closePlugin(`🤘🌗 Dark theme created!`)
     // figma.closePlugin(`🌑 Dark! Unchanged: ${unchanedObjects}`)
 }
 figma.closePlugin()
