@@ -77,7 +77,68 @@ if (figma.currentPage.selection.length == 0) {
             frame.fillStyleId = text_secondary_night
             counter++
         }
+        if (frame.fillStyleId == text_additional_day) {
+            frame.fillStyleId = text_additional_night
+            counter++
+        }
+        if (frame.fillStyleId == text_buttons_day) {
+            frame.fillStyleId = text_buttons_night
+            counter++
+        }
+        if (frame.fillStyleId == actions_attention_day) {
+            frame.fillStyleId = actions_attention_night
+            counter++
+        }
 
+        //BG
+        if (frame.fillStyleId == bg_primary_day) {
+            frame.fillStyleId = bg_primary_night
+            counter++
+        }
+        if (frame.fillStyleId == bg_secondary_day) {
+            frame.fillStyleId = bg_secondary_night
+            counter++
+        }
+        if (frame.fillStyleId == bg_separator_day) {
+            frame.fillStyleId = bg_separator_night
+            counter++
+        }
+
+        //Icons
+        if (frame.fillStyleId == icons_primary_day) {
+            frame.fillStyleId = icons_primary_night
+            counter++
+        }
+        if (frame.fillStyleId == icons_secondary_day) {
+            frame.fillStyleId = icons_secondary_night
+            counter++
+        }
+        if (frame.fillStyleId == icons_additional_day) {
+            frame.fillStyleId = icons_additional_night
+            counter++
+        }
+        if (frame.fillStyleId == icons_actions_day) {
+            frame.fillStyleId = icons_actions_night
+            counter++
+        }
+
+        //Buttons
+        if (frame.fillStyleId == buttons_primary_day) {
+            frame.fillStyleId = buttons_primary_night
+            counter++
+        }
+        if (frame.fillStyleId == buttons_secondary_day) {
+            frame.fillStyleId = buttons_secondary_night
+            counter++
+        }
+        if (frame.fillStyleId == buttons_accent_day) {
+            frame.fillStyleId = buttons_accent_night
+            counter++
+        }
+        if (frame.fillStyleId == buttons_gp_day) {
+            frame.fillStyleId = buttons_gp_night
+            counter++
+        }
     }
 
     // Calculate unchanged objects
