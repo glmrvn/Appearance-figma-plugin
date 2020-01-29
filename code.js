@@ -23,8 +23,8 @@ const actions_attention_night = "S:691d81d027815e4d666d1324d308b38450dee4e5,4248
 const bg_primary_day = "S:e1a2d66a7b683f05a2e8752ece127db0d4322756,4248:50"
 const bg_primary_night = "S:dfafa66499e5e8052454d129fd232da41a9d05b2,4248:52"
 
-const bg_secondary_day = "S:61fb74a6cb3712bcdefbae662f136cea9f4b02cb,4248:54"
-const bg_secondary_night = "S:c9a7ada56e4c0f4fa89e473fdf875fc91296633d,4248:56"
+const bg_additional_day = "S:61fb74a6cb3712bcdefbae662f136cea9f4b02cb,4248:54"
+const bg_additional_night = "S:c9a7ada56e4c0f4fa89e473fdf875fc91296633d,4248:56"
 
 const bg_separator_day = "S:e9e0e9afe3459c449a8fed53f511e385eece1d4d,4248:58"
 const bg_separator_night = "S:aafc5ad7264de2cb0c8c5d63ba1c47af762ea95f,4248:60"
@@ -59,7 +59,7 @@ const buttons_gp_night = "S:cdf1657be0c730cb7ec0bc885951e794f81dc243,4260:15"
 if (figma.currentPage.selection.length == 0) {
     figma.closePlugin("🤔 No object selected.")
 } else {
-    var allSelection = figma.currentPage.selection[0].findAll()
+    const allSelection = figma.currentPage.selection[0].findAll()
     allSelection.unshift(figma.currentPage.selection[0])
     var allObjectsCount = allSelection.length
 
@@ -99,8 +99,8 @@ if (figma.currentPage.selection.length == 0) {
             frame.fillStyleId = bg_primary_night
             counter++
         }
-        if (frame.fillStyleId == bg_secondary_day) {
-            frame.fillStyleId = bg_secondary_night
+        if (frame.fillStyleId == bg_additional_day) {
+            frame.fillStyleId = bg_additional_night
             counter++
         }
         if (frame.fillStyleId == bg_separator_day) {
@@ -152,4 +152,5 @@ if (figma.currentPage.selection.length == 0) {
     figma.closePlugin(`🤘🌗 Dark theme created!`)
     // figma.closePlugin(`🌑 Dark! Unchanged: ${unchanedObjects}`)
 }
+console.log(counter);
 figma.closePlugin()
