@@ -24,7 +24,7 @@ const bg_primary_day = "S:e1a2d66a7b683f05a2e8752ece127db0d4322756,4248:50"
 const bg_primary_night = "S:dfafa66499e5e8052454d129fd232da41a9d05b2,4248:52"
 
 const bg_additional_day = "S:61fb74a6cb3712bcdefbae662f136cea9f4b02cb,4248:54"
-const bg_additional_night = "S:c9a7ada56e4c0f4fa89e473fdf875fc91296633d,4248:56"
+const bg_additional_night = "S:c9a7ada56e4c0f4fa89e473fdf875fc91296633d,4357:0"
 
 const bg_separator_day = "S:e9e0e9afe3459c449a8fed53f511e385eece1d4d,4248:58"
 const bg_separator_night = "S:aafc5ad7264de2cb0c8c5d63ba1c47af762ea95f,4248:60"
