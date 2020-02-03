@@ -55,102 +55,104 @@ const buttons_accent_night = "S:370b6f6710b3d3433a2b9be108faa7b60f77be2a,4260:11
 const buttons_gp_day = "S:8505cd0a02441a477aeeceb3a6c4da157855454a,4260:13"
 const buttons_gp_night = "S:cdf1657be0c730cb7ec0bc885951e794f81dc243,4260:15"
 
-// -------------------------------ERROR NOTIFICATION------------------------------------
-if (figma.currentPage.selection.length == 0) {
-    figma.closePlugin("🤔 No object selected.")
-} else {
-    const allSelection = figma.currentPage.selection[0].findAll()
-    allSelection.unshift(figma.currentPage.selection[0])
-    var allObjectsCount = allSelection.length
+figma.showUI(__html__, { width: 300, height: 150 })
 
-// ------------------------------------REPLACE COLORS----------------------------------
-    for (let index in allSelection) {
-        let frame = allSelection[index];
-        var counter = 0;
+// // -------------------------------ERROR NOTIFICATION------------------------------------
+// if (figma.currentPage.selection.length == 0) {
+//     figma.closePlugin("🤔 No object selected.")
+// } else {
+//     const allSelection = figma.currentPage.selection[0].findAll()
+//     allSelection.unshift(figma.currentPage.selection[0])
+//     var allObjectsCount = allSelection.length
 
-        //Text
-        if (frame.fillStyleId == text_primary_day) {
-            frame.fillStyleId = text_primary_night
-            counter++
-        }
-        if (frame.fillStyleId == text_secondary_day) {
-            frame.fillStyleId = text_secondary_night
-            counter++
-        }
-        if (frame.fillStyleId == text_additional_day) {
-            frame.fillStyleId = text_additional_night
-            counter++
-        }
-        if (frame.fillStyleId == text_buttons_day) {
-            frame.fillStyleId = text_buttons_night
-            counter++
-        }
-        if (frame.fillStyleId == actions_buttons_day) {
-            frame.fillStyleId = actions_buttons_night
-            counter++
-        }
-        if (frame.fillStyleId == actions_attention_day) {
-            frame.fillStyleId = actions_attention_night
-            counter++
-        }
+// // ------------------------------------REPLACE COLORS----------------------------------
+//     for (let index in allSelection) {
+//         let frame = allSelection[index];
+//         var counter = 0;
 
-        //BG
-        if (frame.fillStyleId == bg_primary_day) {
-            frame.fillStyleId = bg_primary_night
-            counter++
-        }
-        if (frame.fillStyleId == bg_additional_day) {
-            frame.fillStyleId = bg_additional_night
-            counter++
-        }
-        if (frame.fillStyleId == bg_separator_day) {
-            frame.fillStyleId = bg_separator_night
-            counter++
-        }
+//         //Text
+//         if (frame.fillStyleId == text_primary_day) {
+//             frame.fillStyleId = text_primary_night
+//             counter++
+//         }
+//         if (frame.fillStyleId == text_secondary_day) {
+//             frame.fillStyleId = text_secondary_night
+//             counter++
+//         }
+//         if (frame.fillStyleId == text_additional_day) {
+//             frame.fillStyleId = text_additional_night
+//             counter++
+//         }
+//         if (frame.fillStyleId == text_buttons_day) {
+//             frame.fillStyleId = text_buttons_night
+//             counter++
+//         }
+//         if (frame.fillStyleId == actions_buttons_day) {
+//             frame.fillStyleId = actions_buttons_night
+//             counter++
+//         }
+//         if (frame.fillStyleId == actions_attention_day) {
+//             frame.fillStyleId = actions_attention_night
+//             counter++
+//         }
 
-        //Icons
-        if (frame.fillStyleId == icons_primary_day) {
-            frame.fillStyleId = icons_primary_night
-            counter++
-        }
-        if (frame.fillStyleId == icons_secondary_day) {
-            frame.fillStyleId = icons_secondary_night
-            counter++
-        }
-        if (frame.fillStyleId == icons_additional_day) {
-            frame.fillStyleId = icons_additional_night
-            counter++
-        }
-        if (frame.fillStyleId == icons_actions_day) {
-            frame.fillStyleId = icons_actions_night
-            counter++
-        }
+//         //BG
+//         if (frame.fillStyleId == bg_primary_day) {
+//             frame.fillStyleId = bg_primary_night
+//             counter++
+//         }
+//         if (frame.fillStyleId == bg_additional_day) {
+//             frame.fillStyleId = bg_additional_night
+//             counter++
+//         }
+//         if (frame.fillStyleId == bg_separator_day) {
+//             frame.fillStyleId = bg_separator_night
+//             counter++
+//         }
 
-        //Buttons
-        if (frame.fillStyleId == buttons_primary_day) {
-            frame.fillStyleId = buttons_primary_night
-            counter++
-        }
-        if (frame.fillStyleId == buttons_secondary_day) {
-            frame.fillStyleId = buttons_secondary_night
-            counter++
-        }
-        if (frame.fillStyleId == buttons_accent_day) {
-            frame.fillStyleId = buttons_accent_night
-            counter++
-        }
-        if (frame.fillStyleId == buttons_gp_day) {
-            frame.fillStyleId = buttons_gp_night
-            counter++
-        }
-    }
+//         //Icons
+//         if (frame.fillStyleId == icons_primary_day) {
+//             frame.fillStyleId = icons_primary_night
+//             counter++
+//         }
+//         if (frame.fillStyleId == icons_secondary_day) {
+//             frame.fillStyleId = icons_secondary_night
+//             counter++
+//         }
+//         if (frame.fillStyleId == icons_additional_day) {
+//             frame.fillStyleId = icons_additional_night
+//             counter++
+//         }
+//         if (frame.fillStyleId == icons_actions_day) {
+//             frame.fillStyleId = icons_actions_night
+//             counter++
+//         }
 
-    // Calculate unchanged objects
-    var unchanedObjects = allObjectsCount-counter
+//         //Buttons
+//         if (frame.fillStyleId == buttons_primary_day) {
+//             frame.fillStyleId = buttons_primary_night
+//             counter++
+//         }
+//         if (frame.fillStyleId == buttons_secondary_day) {
+//             frame.fillStyleId = buttons_secondary_night
+//             counter++
+//         }
+//         if (frame.fillStyleId == buttons_accent_day) {
+//             frame.fillStyleId = buttons_accent_night
+//             counter++
+//         }
+//         if (frame.fillStyleId == buttons_gp_day) {
+//             frame.fillStyleId = buttons_gp_night
+//             counter++
+//         }
+//     }
 
-    // Close plugin
-    figma.closePlugin(`🤘🌗 Dark theme created!`)
-    // figma.closePlugin(`🌑 Dark! Unchanged: ${unchanedObjects}`)
-}
-console.log(counter);
-figma.closePlugin()
+//     // Calculate unchanged objects
+//     var unchanedObjects = allObjectsCount-counter
+
+//     // Close plugin
+//     figma.closePlugin(`🤘🌗 Dark theme created!`)
+//     // figma.closePlugin(`🌑 Dark! Unchanged: ${unchanedObjects}`)
+// }
+// console.log(counter);
+// figma.closePlugin()
