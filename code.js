@@ -55,7 +55,15 @@ const buttons_accent_night = "S:370b6f6710b3d3433a2b9be108faa7b60f77be2a,4260:11
 const buttons_gp_day = "S:8505cd0a02441a477aeeceb3a6c4da157855454a,4260:13"
 const buttons_gp_night = "S:cdf1657be0c730cb7ec0bc885951e794f81dc243,4260:15"
 
+// UI
+
 figma.showUI(__html__, { width: 300, height: 150 })
+
+// Recieving token from UI
+figma.ui.onmessage = (message) => {
+    var token = message
+    console.log(token)
+}
 
 // // -------------------------------ERROR NOTIFICATION------------------------------------
 // if (figma.currentPage.selection.length == 0) {

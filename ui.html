@@ -9,6 +9,15 @@ html, body {
 
 <!-- BODY -->
 <html>
-    Token: <input type="key" name="token">
-    <input type="submit" value="Submit">
+    Token: <input type="key" name="token" id="tokenID">
+    <input type="button" value="Submit" id="submit" onclick="getInputValue();">
+    <script>
+        function getInputValue(){
+            // Selecting the input element and get its value 
+            var token = document.getElementById("tokenID").value;
+
+            // Sending token to plugin
+            parent.postMessage({ pluginMessage: token }, '*')
+        }
+    </script>
 </html>
