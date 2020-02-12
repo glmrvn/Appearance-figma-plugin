@@ -176,6 +176,7 @@ if (figma.currentPage.selection.length == 0) {
         if (frame.fillStyleId == map_day) {
             frame.fillStyleId = map_night
             counter++
+        }
     }
 
     // Calculate unchanged objects
