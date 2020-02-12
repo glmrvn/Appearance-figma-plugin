@@ -63,7 +63,7 @@ const buttons_gp_night = "S:cdf1657be0c730cb7ec0bc885951e794f81dc243,4569:28"
 
 //Map
 const map_day = "S:e37c0e16af4aa924466f62b0c52c709d58cdd780,1744:8"
-const map_night = "S:f12d09c339332a37d25d4b06bd6cff9afaa0bac4,1744:17"
+const map_night = "S:f12d09c339332a37d25d4b06bd6cff9afaa0bac4,4571:1"
 
 // // UI
 
