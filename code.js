@@ -61,6 +61,10 @@ const buttons_accent_night = "S:370b6f6710b3d3433a2b9be108faa7b60f77be2a,4569:29
 const buttons_gp_day = "S:8505cd0a02441a477aeeceb3a6c4da157855454a,4569:19"
 const buttons_gp_night = "S:cdf1657be0c730cb7ec0bc885951e794f81dc243,4569:28"
 
+//Map
+const map_day = "S:e37c0e16af4aa924466f62b0c52c709d58cdd780,1744:8"
+const map_night = "S:f12d09c339332a37d25d4b06bd6cff9afaa0bac4,1744:17"
+
 // // UI
 
 // figma.showUI(__html__, { width: 300, height: 150 })
@@ -167,6 +171,11 @@ if (figma.currentPage.selection.length == 0) {
             frame.fillStyleId = buttons_gp_night
             counter++
         }
+    
+        //Map
+        if (frame.fillStyleId == map_day) {
+            frame.fillStyleId = map_night
+            counter++
     }
 
     // Calculate unchanged objects
