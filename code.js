@@ -65,6 +65,10 @@ const buttons_gp_night = "S:cdf1657be0c730cb7ec0bc885951e794f81dc243,4569:28"
 const map_day = "S:e37c0e16af4aa924466f62b0c52c709d58cdd780,1744:8"
 const map_night = "S:f12d09c339332a37d25d4b06bd6cff9afaa0bac4,4571:1"
 
+//Gradient
+const gradient_day = "S:1a0238b67dc447944128cd7674ea356eba51c87d,4594:1"
+const gradient_night = "S:3837f9e5103267b00bd7b8483d7e1bb37477a0ff,4594:3"
+
 // // UI
 
 // figma.showUI(__html__, { width: 300, height: 150 })
@@ -75,6 +79,7 @@ const map_night = "S:f12d09c339332a37d25d4b06bd6cff9afaa0bac4,4571:1"
 //     console.log(token)
 // }
 // var allColorStyles = figma.getLocalPaintStyles()
+
 // -------------------------------ERROR NOTIFICATION------------------------------------
 if (figma.currentPage.selection.length == 0) {
     figma.closePlugin("🤔 No object selected.")
@@ -175,6 +180,12 @@ if (figma.currentPage.selection.length == 0) {
         //Map
         if (frame.fillStyleId == map_day) {
             frame.fillStyleId = map_night
+            counter++
+        }
+
+        //Map
+        if (frame.fillStyleId == gradient_day) {
+            frame.fillStyleId = gradient_night
             counter++
         }
     }
