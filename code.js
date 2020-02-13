@@ -132,8 +132,16 @@ if (figma.currentPage.selection.length == 0) {
             frame.fillStyleId = bg_additional_night
             counter++
         }
+        if (frame.strokeStyleId == bg_additional_day) {
+            frame.strokeStyleId = bg_additional_night
+            counter++
+        }
         if (frame.fillStyleId == bg_separator_day) {
             frame.fillStyleId = bg_separator_night
+            counter++
+        }
+        if (frame.strokeStyleId == bg_separator_day) {
+            frame.strokeStyleId = bg_separator_night
             counter++
         }
 
