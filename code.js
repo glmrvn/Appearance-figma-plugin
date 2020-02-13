@@ -183,7 +183,7 @@ if (figma.currentPage.selection.length == 0) {
             counter++
         }
 
-        //Map
+        //Gradient
         if (frame.fillStyleId == gradient_day) {
             frame.fillStyleId = gradient_night
             counter++
@@ -197,5 +197,4 @@ if (figma.currentPage.selection.length == 0) {
     figma.closePlugin(`🤘🌗 Dark theme created!`)
     // figma.closePlugin(`🌑 Dark! Unchanged: ${unchanedObjects}`)
 }
-console.log(counter);
 figma.closePlugin()
