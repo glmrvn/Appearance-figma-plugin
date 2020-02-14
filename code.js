@@ -69,6 +69,22 @@ const map_night = "S:f12d09c339332a37d25d4b06bd6cff9afaa0bac4,4571:1"
 const gradient_day = "S:1a0238b67dc447944128cd7674ea356eba51c87d,4594:1"
 const gradient_night = "S:3837f9e5103267b00bd7b8483d7e1bb37477a0ff,4594:3"
 
+// GET LIBRARY COLORS
+if (figma.command == 'get_colors') {
+    var allColors = figma.getLocalPaintStyles()
+    console.log(allColors.length)
+
+    allColors.forEach((paint_style, i) => {
+        const rect = figma.createRectangle();
+        rect.fillStyleId = paint_style.id;
+        figma.clientStorage.setAsync('test', 123)
+        var test = figma.clientStorage.getAsync('test');
+        console.log(test)
+    })
+}
+
+figma.closePlugin()
+
 // // UI
 
 // figma.showUI(__html__, { width: 300, height: 150 })
@@ -80,133 +96,136 @@ const gradient_night = "S:3837f9e5103267b00bd7b8483d7e1bb37477a0ff,4594:3"
 // }
 // var allColorStyles = figma.getLocalPaintStyles()
 
-// -------------------------------ERROR NOTIFICATION------------------------------------
-if (figma.currentPage.selection.length == 0) {
-    figma.closePlugin("🤔 No object selected.")
+// // -------------------------------ERROR NOTIFICATION------------------------------------
+// if (figma.command == 'dark') {
+//     console.log("Dark mode selected")
 
-} else if (!["FRAME", "COMPONENT", "INSTANCE"].includes(figma.currentPage.selection[0].type)) {
-    figma.closePlugin("👆🤓 Select frame or instance")
+// } else if (figma.currentPage.selection.length == 0) {
+//     figma.closePlugin("🤔 No object selected.")
 
-} else {
-    const allSelection = figma.currentPage.selection[0].findAll()
-    allSelection.unshift(figma.currentPage.selection[0])
-    var allObjectsCount = allSelection.length
+// } else if (!["FRAME", "COMPONENT", "INSTANCE"].includes(figma.currentPage.selection[0].type)) {
+//     figma.closePlugin("👆🤓 Select frame or instance")
 
-// ------------------------------------REPLACE COLORS----------------------------------
-    for (let index in allSelection) {
-        let frame = allSelection[index];
-        var counter = 0;
+// } else {
+//     const allSelection = figma.currentPage.selection[0].findAll()
+//     allSelection.unshift(figma.currentPage.selection[0])
+//     var allObjectsCount = allSelection.length
 
-        //Text
-        if (frame.fillStyleId == text_primary_day) {
-            frame.fillStyleId = text_primary_night
-            counter++
-        }
-        if (frame.fillStyleId == text_secondary_day) {
-            frame.fillStyleId = text_secondary_night
-            counter++
-        }
-        if (frame.fillStyleId == text_additional_day) {
-            frame.fillStyleId = text_additional_night
-            counter++
-        }
-        if (frame.fillStyleId == text_buttons_day) {
-            frame.fillStyleId = text_buttons_night
-            counter++
-        }
-        if (frame.fillStyleId == actions_buttons_day) {
-            frame.fillStyleId = actions_buttons_night
-            counter++
-        }
-        if (frame.fillStyleId == actions_attention_day) {
-            frame.fillStyleId = actions_attention_night
-            counter++
-        }
-        if (frame.fillStyleId == text_color_bg_day) {
-            frame.fillStyleId = text_color_bg_night
-            counter++
-        }
+// // ------------------------------------REPLACE COLORS----------------------------------
+//     for (let index in allSelection) {
+//         let frame = allSelection[index];
+//         var counter = 0;
 
-        //BG
-        if (frame.fillStyleId == bg_primary_day) {
-            frame.fillStyleId = bg_primary_night
-            counter++
-        }
-        if (frame.fillStyleId == bg_additional_day) {
-            frame.fillStyleId = bg_additional_night
-            counter++
-        }
-        if (frame.strokeStyleId == bg_additional_day) {
-            frame.strokeStyleId = bg_additional_night
-            counter++
-        }
-        if (frame.fillStyleId == bg_separator_day) {
-            frame.fillStyleId = bg_separator_night
-            counter++
-        }
-        if (frame.strokeStyleId == bg_separator_day) {
-            frame.strokeStyleId = bg_separator_night
-            counter++
-        }
+//         //Text
+//         if (frame.fillStyleId == text_primary_day) {
+//             frame.fillStyleId = text_primary_night
+//             counter++
+//         }
+//         if (frame.fillStyleId == text_secondary_day) {
+//             frame.fillStyleId = text_secondary_night
+//             counter++
+//         }
+//         if (frame.fillStyleId == text_additional_day) {
+//             frame.fillStyleId = text_additional_night
+//             counter++
+//         }
+//         if (frame.fillStyleId == text_buttons_day) {
+//             frame.fillStyleId = text_buttons_night
+//             counter++
+//         }
+//         if (frame.fillStyleId == actions_buttons_day) {
+//             frame.fillStyleId = actions_buttons_night
+//             counter++
+//         }
+//         if (frame.fillStyleId == actions_attention_day) {
+//             frame.fillStyleId = actions_attention_night
+//             counter++
+//         }
+//         if (frame.fillStyleId == text_color_bg_day) {
+//             frame.fillStyleId = text_color_bg_night
+//             counter++
+//         }
 
-        //Icons
-        if (frame.fillStyleId == icons_primary_day) {
-            frame.fillStyleId = icons_primary_night
-            counter++
-        }
-        if (frame.fillStyleId == icons_secondary_day) {
-            frame.fillStyleId = icons_secondary_night
-            counter++
-        }
-        if (frame.fillStyleId == icons_additional_day) {
-            frame.fillStyleId = icons_additional_night
-            counter++
-        }
-        if (frame.fillStyleId == icons_actions_day) {
-            frame.fillStyleId = icons_actions_night
-            counter++
-        }
-        if (frame.fillStyleId == icons_color_bg_day) {
-            frame.fillStyleId = icons_color_bg_night
-            counter++
-        }
+//         //BG
+//         if (frame.fillStyleId == bg_primary_day) {
+//             frame.fillStyleId = bg_primary_night
+//             counter++
+//         }
+//         if (frame.fillStyleId == bg_additional_day) {
+//             frame.fillStyleId = bg_additional_night
+//             counter++
+//         }
+//         if (frame.strokeStyleId == bg_additional_day) {
+//             frame.strokeStyleId = bg_additional_night
+//             counter++
+//         }
+//         if (frame.fillStyleId == bg_separator_day) {
+//             frame.fillStyleId = bg_separator_night
+//             counter++
+//         }
+//         if (frame.strokeStyleId == bg_separator_day) {
+//             frame.strokeStyleId = bg_separator_night
+//             counter++
+//         }
 
-        //Buttons
-        if (frame.fillStyleId == buttons_primary_day) {
-            frame.fillStyleId = buttons_primary_night
-            counter++
-        }
-        if (frame.fillStyleId == buttons_secondary_day) {
-            frame.fillStyleId = buttons_secondary_night
-            counter++
-        }
-        if (frame.fillStyleId == buttons_accent_day) {
-            frame.fillStyleId = buttons_accent_night
-            counter++
-        }
-        if (frame.fillStyleId == buttons_gp_day) {
-            frame.fillStyleId = buttons_gp_night
-            counter++
-        }
+//         //Icons
+//         if (frame.fillStyleId == icons_primary_day) {
+//             frame.fillStyleId = icons_primary_night
+//             counter++
+//         }
+//         if (frame.fillStyleId == icons_secondary_day) {
+//             frame.fillStyleId = icons_secondary_night
+//             counter++
+//         }
+//         if (frame.fillStyleId == icons_additional_day) {
+//             frame.fillStyleId = icons_additional_night
+//             counter++
+//         }
+//         if (frame.fillStyleId == icons_actions_day) {
+//             frame.fillStyleId = icons_actions_night
+//             counter++
+//         }
+//         if (frame.fillStyleId == icons_color_bg_day) {
+//             frame.fillStyleId = icons_color_bg_night
+//             counter++
+//         }
+
+//         //Buttons
+//         if (frame.fillStyleId == buttons_primary_day) {
+//             frame.fillStyleId = buttons_primary_night
+//             counter++
+//         }
+//         if (frame.fillStyleId == buttons_secondary_day) {
+//             frame.fillStyleId = buttons_secondary_night
+//             counter++
+//         }
+//         if (frame.fillStyleId == buttons_accent_day) {
+//             frame.fillStyleId = buttons_accent_night
+//             counter++
+//         }
+//         if (frame.fillStyleId == buttons_gp_day) {
+//             frame.fillStyleId = buttons_gp_night
+//             counter++
+//         }
     
-        //Map
-        if (frame.fillStyleId == map_day) {
-            frame.fillStyleId = map_night
-            counter++
-        }
+//         //Map
+//         if (frame.fillStyleId == map_day) {
+//             frame.fillStyleId = map_night
+//             counter++
+//         }
 
-        //Gradient
-        if (frame.fillStyleId == gradient_day) {
-            frame.fillStyleId = gradient_night
-            counter++
-        }
-    }
+//         //Gradient
+//         if (frame.fillStyleId == gradient_day) {
+//             frame.fillStyleId = gradient_night
+//             counter++
+//         }
+//     }
 
-    // Calculate unchanged objects
-    var unchanedObjects = allObjectsCount-counter
+//     // Calculate unchanged objects
+//     var unchanedObjects = allObjectsCount-counter
 
-    // Close plugin
-    figma.closePlugin(`🤘🌗 Dark theme created!`)
-    // figma.closePlugin(`🌑 Dark! Unchanged: ${unchanedObjects}`)
-}
-figma.closePlugin()
+//     // Close plugin
+//     figma.closePlugin(`🤘🌗 Dark theme created!`)
+//     // figma.closePlugin(`🌑 Dark! Unchanged: ${unchanedObjects}`)
+// }
+// figma.closePlugin()
