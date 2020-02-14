@@ -83,6 +83,10 @@ const gradient_night = "S:3837f9e5103267b00bd7b8483d7e1bb37477a0ff,4594:3"
 // -------------------------------ERROR NOTIFICATION------------------------------------
 if (figma.currentPage.selection.length == 0) {
     figma.closePlugin("🤔 No object selected.")
+
+} else if (!["FRAME", "COMPONENT", "INSTANCE"].includes(figma.currentPage.selection[0].type)) {
+    figma.closePlugin("👆🤓 Select frame or instance")
+
 } else {
     const allSelection = figma.currentPage.selection[0].findAll()
     allSelection.unshift(figma.currentPage.selection[0])
