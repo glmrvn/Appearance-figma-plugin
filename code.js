@@ -69,18 +69,37 @@ const map_night = "S:f12d09c339332a37d25d4b06bd6cff9afaa0bac4,4571:1"
 const gradient_day = "S:1a0238b67dc447944128cd7674ea356eba51c87d,4594:1"
 const gradient_night = "S:3837f9e5103267b00bd7b8483d7e1bb37477a0ff,4594:3"
 
+
 // GET LIBRARY COLORS
 if (figma.command == 'get_colors') {
-    var allColors = figma.getLocalPaintStyles()
-    console.log(allColors.length)
+    async function setPaints() {
+        await figma.clientStorage.setAsync('allColors', figma.getLocalPaintStyles())
+    }
 
-    allColors.forEach((paint_style, i) => {
-        const rect = figma.createRectangle();
-        rect.fillStyleId = paint_style.id;
-        figma.clientStorage.setAsync('test', 123)
-        var test = figma.clientStorage.getAsync('test');
-        console.log(test)
-    })
+    setPaints()
+
+}
+
+// DARK MODE
+if (figma.command == 'dark') {
+
+    async function getPaints() {
+        var allColors = await figma.clientStorage.getAsync('allColors')
+        console.log(allColors)
+
+        if (allColors.length == 0) {
+            figma.closePlugin("Please add colors from library")
+        }
+    }
+
+    getPaints()
+
+
+
+    // allColors.forEach((paint_style, i) => {
+    //     const rect = figma.createRectangle();
+    //     rect.fillStyleId = paint_style.id;
+    // })
 }
 
 figma.closePlugin()
