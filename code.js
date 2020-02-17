@@ -9,7 +9,7 @@ if (figma.command == 'get_colors') {
 
 }
 
-// DARK MODE
+// SELECTED DARK MODE
 if (figma.command == 'dark') {
 
     async function getPaints() {
@@ -34,4 +34,9 @@ if (figma.command == 'dark') {
     getPaints()
     figma.closePlugin()
 
+}
+
+// SELECTED LIGHT MODE
+if (figma.command == 'light') {
+    figma.closePlugin()
 }
