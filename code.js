@@ -70,6 +70,9 @@ if (figma.command == 'dark') {
             if (frame.fillStyleId && object && object[frame.fillStyleId]) {
                 frame.fillStyleId = object[frame.fillStyleId];
             }
+            if (frame.strokeStyleId && object && object[frame.strokeStyleId]) {
+                frame.strokeStyleId = object[frame.strokeStyleId];
+            }
         }
     }
 
@@ -125,6 +128,9 @@ if (figma.command == 'light') {
         for (let frame of allSelection) {
             if (frame.fillStyleId && object && object[frame.fillStyleId]) {
                 frame.fillStyleId = object[frame.fillStyleId];
+            }
+            if (frame.strokeStyleId && object && object[frame.strokeStyleId]) {
+                frame.strokeStyleId = object[frame.strokeStyleId];
             }
         }
     }
