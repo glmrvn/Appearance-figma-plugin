@@ -126,8 +126,7 @@ if (figma.command == 'light') {
         });
 
         Object.entries(daysLocal).forEach(([name, id]) => {
-            // object[id] = nights[name];
-            objectLocal[nightsLocal[name]] = id.slice(0,43);
+            objectLocal[nightsLocal[name]] = id;
         });
 
     }
