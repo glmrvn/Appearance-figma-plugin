@@ -3,7 +3,6 @@
   "id": "760927481606931799",
   "api": "1.0.0",
   "main": "code.js",
-  "ui": "ui.html",
   "menu": [
     {"name": "Dark mode", "command": "dark"},
     {"name": "Light mode", "command": "light"},
