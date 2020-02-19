@@ -1,7 +1,7 @@
 # Appearance. Figma plugin. 
 [Link to the Figma plugin page](https://www.figma.com/c/plugin/760927481606931799/Appearance)
 
-![Image preview](https://i.imgur.com/6U35R8K.gif)
+![Image preview](https://i.imgur.com/6U35R8K.gif | width=600)
 
 ## What plugin do
 This plugin generates a dark/light theme from your selection.
