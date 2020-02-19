@@ -2,6 +2,7 @@ var day = "[day]"
 var night = "[night]"
 var allSelection
 var colorsArray = []
+var counter = 0
 
 // GET LIBRARY COLORS
 if (figma.command == 'get_colors') {
@@ -74,22 +75,35 @@ if (figma.command == 'dark') {
         for (let frame of allSelection) {
             if (frame.fillStyleId && object && object[frame.fillStyleId]) {
                 frame.fillStyleId = object[frame.fillStyleId];
+                counter++;
             }
             if (frame.strokeStyleId && object && object[frame.strokeStyleId]) {
                 frame.strokeStyleId = object[frame.strokeStyleId];
+                counter++;
             }
             if (frame.fillStyleId && objectLocal && objectLocal[frame.fillStyleId]) {
                 frame.fillStyleId = objectLocal[frame.fillStyleId];
+                counter++;
             }
             if (frame.strokeStyleId && objectLocal && objectLocal[frame.strokeStyleId]) {
                 frame.strokeStyleId = objectLocal[frame.strokeStyleId];
+                counter++;
             }
+        }
+    }
+//Checking day colors
+    function notDayObjects() {
+        if (counter == 0) {
+            figma.closePlugin(`😶 Selection does not have [day] colors`);
         }
     }
 
     getPaints().then(() => {
         findSelectedFrames();
         return 1;
+    }
+    ).then(() => {
+        notDayObjects();
     }
     ).then(() => figma.closePlugin(`🤘🌗 Dark theme created!`));
 
@@ -148,21 +162,36 @@ if (figma.command == 'light') {
         for (let frame of allSelection) {
             if (frame.fillStyleId && object && object[frame.fillStyleId]) {
                 frame.fillStyleId = object[frame.fillStyleId];
+                counter++
             }
             if (frame.strokeStyleId && object && object[frame.strokeStyleId]) {
                 frame.strokeStyleId = object[frame.strokeStyleId];
+                counter++
             }
             if (frame.fillStyleId && objectLocal && objectLocal[frame.fillStyleId]) {
                 frame.fillStyleId = objectLocal[frame.fillStyleId];
+                counter++
             }
             if (frame.strokeStyleId && objectLocal && objectLocal[frame.strokeStyleId]) {
                 frame.strokeStyleId = objectLocal[frame.strokeStyleId];
+                counter++
             }
+        }
+    }
+
+//Checking night colors
+    function notNightObjects() {
+        if (counter == 0) {
+            figma.closePlugin(`😶 Selection does not have [night] colors`);
         }
     }
 
     getPaints().then(() => {
         findSelectedFrames();
+        return 1;
+    }
+    ).then(() => {
+        notNightObjects();
     }
     ).then(() => figma.closePlugin(`🤘🌖 Light theme created!`));
 }
