@@ -6,21 +6,26 @@ var counter = 0
 
 // GET LIBRARY COLORS
 if (figma.command == 'get_colors') {
-    async function setPaints() {
-        await figma.clientStorage.setAsync('allColors', figma.getLocalPaintStyles().map(a => a.key))
+
+    if (figma.getLocalPaintStyles().length == 0){
+        { figma.closePlugin('😶 This document does not have colors style') }
+    } else {
+        setPaints()
+        colorsNumber()
+
+        async function setPaints() {
+            await figma.clientStorage.setAsync('allColors', figma.getLocalPaintStyles().map(a => a.key))
+        }
+    
+        async function colorsNumber() {
+            var allColors = await figma.clientStorage.getAsync('allColors')
+            console.log(allColors.length)
+    
+            if (allColors.length > 0){
+                figma.closePlugin(`👌 Saved colors: ${allColors.length}`)
+            } else { figma.closePlugin('😶 You dont have saved styles') }
+        }
     }
-
-    async function colorsNumber() {
-        var allColors = await figma.clientStorage.getAsync('allColors')
-        console.log(allColors.length)
-
-        if (allColors.length > 0){
-            figma.closePlugin(`👌 Saved colors: ${allColors.length}`)
-        } else { figma.closePlugin('😶 You dont have colors') }
-    }
-
-    setPaints()
-    colorsNumber()
 }
 
 var object = {};
@@ -32,7 +37,7 @@ if (figma.command == 'dark') {
     async function getPaints() {
         var allColors = await figma.clientStorage.getAsync('allColors')
         if (allColors.length == 0) {
-            figma.closePlugin("Please add colors from library")
+            figma.closePlugin("🤔 Please add colors from library")
         }
 
         var days = {}
