@@ -1,15 +1,15 @@
 # Appearance. Figma plugin. 
 
-This plugin generates a dark/light theme from your selection.
-Works with your color styles at the remote public library and locally.
+The plugin generates a dark/light theme from your selection.
+Works with team library or local file color styles.
 [Link to the Figma plugin page](https://www.figma.com/c/plugin/760927481606931799/Appearance)
 
 <img width="640" alt="image" src="https://i.imgur.com/6U35R8K.gif">
 
 ## How it works:
 1. Use [day] and [night] in your style names.
-2. Select "Get library colors" at the plugin menu.
-3. Select a frame or instance and choose "Dark Mode" or "Light Mode"Get library colors.
+2. Select "Get library colors" at the plugin menu to grab document color styles.
+3. Select the frame or instance. Then choose: "Dark Mode" or "Light Mode".
 
 ## Styles name examples:
 You can use [day] / [night] at any place of your style name.
