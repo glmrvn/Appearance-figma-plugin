@@ -8,7 +8,7 @@ Works with team library or local file color styles.
 
 ## How it works:
 1. Use [day] and [night] in your style names.
-2. Select "Get library colors" at the plugin menu to grab document color styles.
+2. Select "Get styles" at the plugin menu.
 3. Select the frame or instance. Then choose: "Dark Mode" or "Light Mode".
 
 ## Styles name examples:
