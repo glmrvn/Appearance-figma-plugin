@@ -48,7 +48,7 @@ if (figma.command == 'dark') {
 
         } else {
 
-//Import styles
+            //Importing public styles
             for (let styleKey of publicStyles) {
                 try {
                     var singleImportedStyle = await figma.importStyleByKeyAsync(styleKey);
@@ -59,7 +59,7 @@ if (figma.command == 'dark') {
             var allStyles = [...localStyles, ...importStyles]
             console.log(allStyles)
 
-//Selecting style couples
+            //Creating style couples
             for (let paintStyle of allStyles) {
                 const name = paintStyle.name
                 const id = paintStyle.id
@@ -85,17 +85,15 @@ if (figma.command == 'dark') {
 
 // Changing colors
     function findSelectedFrames() {
-        let allSelection = [];
         if (figma.currentPage.selection.length == 0) {
-            figma.notify("🤔 No object selected.");
-            figma.closePlugin();
-
-        } else if (!["FRAME", "COMPONENT", "INSTANCE"].includes(figma.currentPage.selection[0].type)) {
-            figma.notify("👆🤓 Select frame or instance");
-            figma.closePlugin();
+            figma.closePlugin("🤔 No object selected. Please select any object");
 
         } else {
-            allSelection = figma.currentPage.selection[0].findAll();
+            try {
+                var allSelection = figma.currentPage.selection[0].findAll();
+            } catch(error) {
+                var allSelection = [];
+            }
             allSelection.unshift(figma.currentPage.selection[0]);
         }
 
