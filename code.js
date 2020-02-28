@@ -3,12 +3,14 @@ var night = "[night]"
 var allSelection
 var colorsArray = []
 var counter = 0
+var object = {};
+var objectLocal = {};
 
 // GET LIBRARY COLORS
 if (figma.command == 'get_colors') {
 
     if (figma.getLocalPaintStyles().length == 0){
-        { figma.closePlugin('😶 This document does not have colors style') }
+        figma.closePlugin('😶 This document does not have colors style');
     } else {
         setPaints()
         colorsNumber()
@@ -19,62 +21,82 @@ if (figma.command == 'get_colors') {
     
         async function colorsNumber() {
             var allColors = await figma.clientStorage.getAsync('allColors')
-            console.log(allColors.length)
+            // console.log(allColors.length)
     
             if (allColors.length > 0){
-                figma.closePlugin(`👌 Saved colors: ${allColors.length}`)
-            } else { figma.closePlugin('😶 You dont have saved styles') }
+                figma.closePlugin(`👌 Saved styles: ${allColors.length}`);
+            } else {
+                figma.closePlugin('😶 You dont have saved styles');
+            }
         }
     }
 }
-
-var object = {};
-var objectLocal = {};
 
 // SELECTED DARK MODE
 if (figma.command == 'dark') {
 
     async function getPaints() {
-        var allColors = await figma.clientStorage.getAsync('allColors')
-        if (allColors.length == 0) {
-            figma.closePlugin("🤔 Please add colors from library")
-        }
+        var publicStyles = await figma.clientStorage.getAsync('allColors');
+        var localStyles = figma.getLocalPaintStyles();
 
+        var importStyles = []
         var days = {}
         var nights = {}
-        for (let paintStyle of allColors) {
-            const {name, id} = await figma.importStyleByKeyAsync(paintStyle).then((i) => ({name: i.name, id: i.id}));
-            if (name.includes(night)) {
-                const key = name.replace(night, '');
-                nights[key] = id;
-            } else if (name.includes(day)) {
-                const key = name.replace(day, '');
-                days[key] = id;
+
+        if (publicStyles.length == 0 && localStyles.length == 0) {
+            figma.closePlugin('😶 This document does not have color styles');
+
+        } else {
+
+//Import styles
+            for (let styleKey of publicStyles) {
+                try {
+                    var singleImportedStyle = await figma.importStyleByKeyAsync(styleKey);
+                    importStyles.push(singleImportedStyle);
+                } catch(error) {}
             }
+
+            var allStyles = [...localStyles, ...importStyles]
+            console.log(allStyles)
+
+//Selecting style couples
+            for (let paintStyle of allStyles) {
+                const name = paintStyle.name
+                const id = paintStyle.id
+                if (name.includes(night)) {
+                    const key = name.replace(night, '');
+                    nights[key] = id;
+                } else if (name.includes(day)) {
+                    const key = name.replace(day, '');
+                    days[key] = id;
+                }
+            }
+
+            Object.entries(days).forEach(([name, id]) => {
+                object[id] = nights[name];
+                // object[nights[name]] = id;
+            });
+    
+            Object.entries(days).forEach(([name, id]) => {
+                objectLocal[id.slice(0,43)] = nights[name];
+            });
         }
-
-        Object.entries(days).forEach(([name, id]) => {
-            object[id] = nights[name];
-            // object[nights[name]] = id;
-        });
-
-        Object.entries(days).forEach(([name, id]) => {
-            objectLocal[id.slice(0,43)] = nights[name];
-        });
     }
 
 // Changing colors
     function findSelectedFrames() {
         let allSelection = [];
         if (figma.currentPage.selection.length == 0) {
-            figma.closePlugin("🤔 No object selected.")
+            figma.notify("🤔 No object selected.");
+            figma.closePlugin();
 
         } else if (!["FRAME", "COMPONENT", "INSTANCE"].includes(figma.currentPage.selection[0].type)) {
-            figma.closePlugin("👆🤓 Select frame or instance")
+            figma.notify("👆🤓 Select frame or instance");
+            figma.closePlugin();
 
         } else {
             allSelection = figma.currentPage.selection[0].findAll();
-            allSelection.unshift(figma.currentPage.selection[0])
+            allSelection.unshift(figma.currentPage.selection[0]);
         }
 
         for (let frame of allSelection) {
