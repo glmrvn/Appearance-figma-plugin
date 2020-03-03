@@ -57,7 +57,7 @@ if (figma.command == 'dark') {
             }
 
             var allStyles = [...localStyles, ...importStyles]
-            console.log(allStyles)
+            // console.log(allStyles)
 
             //Creating style couples
             for (let paintStyle of allStyles) {
@@ -137,51 +137,69 @@ if (figma.command == 'dark') {
 // SELECTED LIGHT MODE
 if (figma.command == 'light') {
     async function getPaints() {
-        var allColors = await figma.clientStorage.getAsync('allColors')
-        if (allColors.length == 0) {
-            figma.closePlugin("Please add colors from library")
-        }
+        var publicStyles = await figma.clientStorage.getAsync('allColors');
+        var localStyles = figma.getLocalPaintStyles();
 
+        var importStyles = []
         var days = {}
         var daysLocal = {}
         var nights = {}
         var nightsLocal = {}
-        for (let paintStyle of allColors) {
-            const {name, id} = await figma.importStyleByKeyAsync(paintStyle).then((i) => ({name: i.name, id: i.id}));
-            if (name.includes(night)) {
-                const key = name.replace(night, '');
-                nights[key] = id;
-                nightsLocal[key] = id.slice(0,43);
-            } else if (name.includes(day)) {
-                const key = name.replace(day, '');
-                days[key] = id;
-                daysLocal[key] = id.slice(0,43);
+
+        if (publicStyles.length == 0 && localStyles.length == 0) {
+            figma.closePlugin('😶 This document does not have color styles');
+
+        } else {
+
+            //Importing public styles
+            for (let styleKey of publicStyles) {
+                try {
+                    var singleImportedStyle = await figma.importStyleByKeyAsync(styleKey);
+                    importStyles.push(singleImportedStyle);
+                } catch(error) {}
             }
+
+            var allStyles = [...localStyles, ...importStyles]
+            // console.log(allStyles)
+
+            //Creating style couples
+            for (let paintStyle of allStyles) {
+                const name = paintStyle.name
+                const id = paintStyle.id
+                if (name.includes(night)) {
+                    const key = name.replace(night, '');
+                    nights[key] = id;
+                    nightsLocal[key] = id.slice(0,43);
+                } else if (name.includes(day)) {
+                    const key = name.replace(day, '');
+                    days[key] = id;
+                    daysLocal[key] = id.slice(0,43);
+                }
+            }
+
+            Object.entries(days).forEach(([name, id]) => {
+                // object[id] = nights[name];
+                object[nights[name]] = id;
+            });
+
+            Object.entries(daysLocal).forEach(([name, id]) => {
+                objectLocal[nightsLocal[name]] = id;
+            });
         }
-
-        Object.entries(days).forEach(([name, id]) => {
-            // object[id] = nights[name];
-            object[nights[name]] = id;
-        });
-
-        Object.entries(daysLocal).forEach(([name, id]) => {
-            objectLocal[nightsLocal[name]] = id;
-        });
-
     }
 
 // Changing colors
     function findSelectedFrames() {
-        let allSelection = [];
         if (figma.currentPage.selection.length == 0) {
-            figma.closePlugin("🤔 No object selected.")
-
-        } else if (!["FRAME", "COMPONENT", "INSTANCE"].includes(figma.currentPage.selection[0].type)) {
-            figma.closePlugin("👆🤓 Select frame or instance")
+            figma.closePlugin("🤔 No object selected. Please select any object");
 
         } else {
-            allSelection = figma.currentPage.selection[0].findAll();
-            allSelection.unshift(figma.currentPage.selection[0])
+            try {
+                var allSelection = figma.currentPage.selection[0].findAll();
+            } catch(error) {
+                var allSelection = [];
+            }
+            allSelection.unshift(figma.currentPage.selection[0]);
         }
 
         for (let frame of allSelection) {
