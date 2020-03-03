@@ -7,6 +7,6 @@
     {"name": "Dark mode", "command": "dark"},
     {"name": "Light mode", "command": "light"},
     {"separator": true},
-    {"name": "Get styles", "command": "get_colors"}
+    {"name": "Save styles", "command": "get_colors"}
   ]
 }
