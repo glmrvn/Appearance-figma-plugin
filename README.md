@@ -17,7 +17,7 @@ The plugin works with external library styles and local styles.
 3. Select Appearance → Save styles for saving external color styles to the plugin.
 4. Open any file linked to the library. 
 5. Apply color styles.
-6. Select any object then choose Appearance → Dark mode or Appearance → Light mode”
+6. Select any object then choose Appearance → Dark mode or Appearance → Light mode
 
 ## Styles name examples:
 You can use [day] / [night] at any place of your style name.
@@ -27,7 +27,7 @@ Color name [night]
 ```
 ```
 Style [day] / color-name
-Style [nigth] / color-name
+Style [night] / color-name
 ```
 ```
 Style / color-name [day]
