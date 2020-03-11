@@ -4,7 +4,7 @@ This plugin generates a dark/light mode from your selection.
 The plugin works with external library styles and local styles.
 [Link to the Figma plugin page](https://www.figma.com/c/plugin/760927481606931799/Appearance)
 
-<img width="640" alt="image" src="https://i.imgur.com/6U35R8K.gif">
+<img width="640" alt="image" src="https://i.imgur.com/GSa5vgI.gif">
 
 ## How it works:
 1. Use [day] and [night] in your style names. Example: Style name[day]/ Style name[night].
