@@ -6,6 +6,48 @@ var counter = 0
 var object = {};
 var objectLocal = {};
 
+setNamesToStorage()
+async function setNamesToStorage() {
+    var dayFromStorage = await figma.clientStorage.getAsync('dayFromStorage')
+    var nightFromStorage = await figma.clientStorage.getAsync('nightFromStorage')
+
+    if (dayFromStorage == "" && nightFromStorage == "") {
+        await figma.clientStorage.setAsync('dayFromStorage', day)
+        await figma.clientStorage.setAsync('nightFromStorage', night)
+    }
+}
+
+// NAME SETTINGS UI
+if (figma.command == 'name_settings_ui') {
+    figma.showUI(__html__, { width: 240, height: 150 })
+
+    sendToUI()
+    async function sendToUI() {
+
+        var dayFromStorage = await figma.clientStorage.getAsync('dayFromStorage')
+        var nightFromStorage = await figma.clientStorage.getAsync('nightFromStorage')
+
+        figma.ui.postMessage({ day: dayFromStorage, night: nightFromStorage })
+    }
+    
+
+    // Recieving settings from UI
+    figma.ui.onmessage = async (msg) => {
+        if (msg.type === 'dayInput') {
+            await figma.clientStorage.setAsync('dayFromStorage', msg.dayColor)
+        }
+        if (msg.type === 'nightInput') {
+            await figma.clientStorage.setAsync('nightFromStorage', msg.nightColor)
+        }
+        if (msg.type === 'clearStorage') {
+            await figma.clientStorage.setAsync('dayFromStorage', "")
+            await figma.clientStorage.setAsync('nightFromStorage', "")
+            await figma.clientStorage.setAsync('allColors', "")
+            figma.closePlugin('😶 Reset');
+        }
+    }
+}
+
 // GET LIBRARY COLORS
 if (figma.command == 'get_colors') {
 
@@ -43,6 +85,9 @@ if (figma.command == 'dark') {
         var days = {}
         var nights = {}
 
+        var dayFromStorage = await figma.clientStorage.getAsync('dayFromStorage')
+        var nightFromStorage = await figma.clientStorage.getAsync('nightFromStorage')
+
         if (publicStyles.length == 0 && localStyles.length == 0) {
             figma.closePlugin('😶 This document does not have color styles');
 
@@ -63,11 +108,11 @@ if (figma.command == 'dark') {
             for (let paintStyle of allStyles) {
                 const name = paintStyle.name
                 const id = paintStyle.id
-                if (name.includes(night)) {
-                    const key = name.replace(night, '');
+                if (name.includes(nightFromStorage)) {
+                    const key = name.replace(nightFromStorage, '');
                     nights[key] = id;
-                } else if (name.includes(day)) {
-                    const key = name.replace(day, '');
+                } else if (name.includes(dayFromStorage)) {
+                    const key = name.replace(dayFromStorage, '');
                     days[key] = id;
                 }
             }
@@ -146,6 +191,9 @@ if (figma.command == 'light') {
         var nights = {}
         var nightsLocal = {}
 
+        var dayFromStorage = await figma.clientStorage.getAsync('dayFromStorage')
+        var nightFromStorage = await figma.clientStorage.getAsync('nightFromStorage')
+
         if (publicStyles.length == 0 && localStyles.length == 0) {
             figma.closePlugin('😶 This document does not have color styles');
 
@@ -166,12 +214,12 @@ if (figma.command == 'light') {
             for (let paintStyle of allStyles) {
                 const name = paintStyle.name
                 const id = paintStyle.id
-                if (name.includes(night)) {
-                    const key = name.replace(night, '');
+                if (name.includes(nightFromStorage)) {
+                    const key = name.replace(nightFromStorage, '');
                     nights[key] = id;
                     nightsLocal[key] = id.slice(0,43);
-                } else if (name.includes(day)) {
-                    const key = name.replace(day, '');
+                } else if (name.includes(dayFromStorage)) {
+                    const key = name.replace(dayFromStorage, '');
                     days[key] = id;
                     daysLocal[key] = id.slice(0,43);
                 }
