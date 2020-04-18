@@ -8,7 +8,7 @@
     {"name": "Dark mode", "command": "dark"},
     {"name": "Light mode", "command": "light"},
     {"separator": true},
-    {"name": "Name settings", "command": "name_settings_ui"},
+    {"name": "Settings", "command": "name_settings_ui"},
     {"name": "Save styles", "command": "get_colors"}
   ]
 }

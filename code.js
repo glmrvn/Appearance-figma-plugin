@@ -35,15 +35,16 @@ if (figma.command == 'name_settings_ui') {
     figma.ui.onmessage = async (msg) => {
         if (msg.type === 'dayInput') {
             await figma.clientStorage.setAsync('dayFromStorage', msg.dayColor)
+            figma.closePlugin('👌 Settings saved');
         }
         if (msg.type === 'nightInput') {
             await figma.clientStorage.setAsync('nightFromStorage', msg.nightColor)
         }
         if (msg.type === 'clearStorage') {
-            await figma.clientStorage.setAsync('dayFromStorage', "")
-            await figma.clientStorage.setAsync('nightFromStorage', "")
-            await figma.clientStorage.setAsync('allColors', "")
-            figma.closePlugin('😶 Reset');
+            await figma.clientStorage.setAsync('dayFromStorage', day)
+            await figma.clientStorage.setAsync('nightFromStorage', night)
+            // await figma.clientStorage.setAsync('allColors', "")
+            figma.closePlugin('😶 All settings was reset');
         }
     }
 }
