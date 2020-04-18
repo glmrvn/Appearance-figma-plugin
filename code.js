@@ -8,10 +8,8 @@ var objectLocal = {};
 
 setNamesToStorage()
 async function setNamesToStorage() {
-    var dayFromStorage = await figma.clientStorage.getAsync('dayFromStorage')
-    var nightFromStorage = await figma.clientStorage.getAsync('nightFromStorage')
 
-    if (dayFromStorage == "" && nightFromStorage == "") {
+    if (typeof dayFromStorage === 'undefined' && typeof nightFromStorage === 'undefined') {
         await figma.clientStorage.setAsync('dayFromStorage', day)
         await figma.clientStorage.setAsync('nightFromStorage', night)
     }
@@ -21,7 +19,17 @@ async function setNamesToStorage() {
 if (figma.command == 'name_settings_ui') {
     figma.showUI(__html__, { width: 240, height: 170 })
 
-    sendToUI()
+    async function setNamesToStorage() {
+        var dayFromStorage = await figma.clientStorage.getAsync('dayFromStorage')
+        var nightFromStorage = await figma.clientStorage.getAsync('nightFromStorage')
+
+        if (typeof dayFromStorage === undefined && typeof nightFromStorage === undefined) {
+            await figma.clientStorage.setAsync('dayFromStorage', day)
+            await figma.clientStorage.setAsync('nightFromStorage', night)
+        }
+    }
+
+    setNamesToStorage().then(sendToUI())
     async function sendToUI() {
 
         var dayFromStorage = await figma.clientStorage.getAsync('dayFromStorage')
@@ -89,12 +97,10 @@ if (figma.command == 'dark') {
         var dayFromStorage = await figma.clientStorage.getAsync('dayFromStorage')
         var nightFromStorage = await figma.clientStorage.getAsync('nightFromStorage')
 
-        if (publicStyles.length == 0 && localStyles.length == 0) {
+        if (typeof publicStyles === 'undefined' && localStyles.length == 0) {
             figma.closePlugin('😶 This document does not have color styles');
 
         } else {
-
-            //Importing public styles
             for (let styleKey of publicStyles) {
                 try {
                     var singleImportedStyle = await figma.importStyleByKeyAsync(styleKey);
@@ -195,7 +201,7 @@ if (figma.command == 'light') {
         var dayFromStorage = await figma.clientStorage.getAsync('dayFromStorage')
         var nightFromStorage = await figma.clientStorage.getAsync('nightFromStorage')
 
-        if (publicStyles.length == 0 && localStyles.length == 0) {
+        if (typeof publicStyles === 'undefined' && localStyles.length == 0) {
             figma.closePlugin('😶 This document does not have color styles');
 
         } else {
