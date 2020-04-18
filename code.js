@@ -19,7 +19,7 @@ async function setNamesToStorage() {
 
 // NAME SETTINGS UI
 if (figma.command == 'name_settings_ui') {
-    figma.showUI(__html__, { width: 240, height: 150 })
+    figma.showUI(__html__, { width: 240, height: 170 })
 
     sendToUI()
     async function sendToUI() {
@@ -165,7 +165,7 @@ if (figma.command == 'dark') {
 //Checking day colors
     function notDayObjects() {
         if (counter == 0) {
-            figma.closePlugin(`😶 Selection does not have [day] colors`);
+            figma.closePlugin(`😶 Selection does not have style pairs`);
         }
     }
 
@@ -274,7 +274,7 @@ if (figma.command == 'light') {
 //Checking night colors
     function notNightObjects() {
         if (counter == 0) {
-            figma.closePlugin(`😶 Selection does not have [night] colors`);
+            figma.closePlugin(`😶 Selection does not have style pairs`);
         }
     }
 
