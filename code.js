@@ -13,8 +13,10 @@ async function setNamesToStorage() {
     var dayFromStorage = await figma.clientStorage.getAsync('dayFromStorage')
     var nightFromStorage = await figma.clientStorage.getAsync('nightFromStorage')
 
-    if (typeof dayFromStorage === 'undefined' || typeof nightFromStorage === 'undefined') {
+    if (typeof dayFromStorage === 'undefined') {
         await figma.clientStorage.setAsync('dayFromStorage', day)
+    }
+    if (typeof nightFromStorage === 'undefined') {
         await figma.clientStorage.setAsync('nightFromStorage', night)
     }
     // console.log(dayFromStorage)
@@ -38,6 +40,7 @@ if (figma.command == 'name_settings_ui') {
         if (dayFromStorage.length > 0 || nightFromStorage.length > 0) {
             figma.ui.postMessage({ day: dayFromStorage, night: nightFromStorage })
         }
+        // figma.ui.postMessage({ day: dayFromStorage, night: nightFromStorage })
     }
     
 
@@ -51,12 +54,12 @@ if (figma.command == 'name_settings_ui') {
             await figma.clientStorage.setAsync('nightFromStorage', msg.nightColor)
         }
         if (msg.type === 'clearStorage') {
-            // await figma.clientStorage.setAsync('dayFromStorage', day)
-            // await figma.clientStorage.setAsync('nightFromStorage', night)
-            await figma.clientStorage.setAsync('dayFromStorage')
-            await figma.clientStorage.setAsync('nightFromStorage')
-            await figma.clientStorage.setAsync('allColors')
-            await figma.clientStorage.setAsync('allEffects')
+            await figma.clientStorage.setAsync('dayFromStorage', day)
+            await figma.clientStorage.setAsync('nightFromStorage', night)
+            // await figma.clientStorage.setAsync('dayFromStorage')
+            // await figma.clientStorage.setAsync('nightFromStorage')
+            // await figma.clientStorage.setAsync('allColors')
+            // await figma.clientStorage.setAsync('allEffects')
             figma.closePlugin('😶 All settings were reset');
         }
     }
@@ -98,6 +101,7 @@ if (figma.command == 'dark') {
 
         if (typeof publicColorStyles === 'undefined') {
             await figma.clientStorage.setAsync('allColors', "")
+            // console.log(publicColorStyles)
         }
         if (typeof publicEffectStyles === 'undefined') {
             await figma.clientStorage.setAsync('allEffects', "")
@@ -117,6 +121,11 @@ if (figma.command == 'dark') {
 
         var dayFromStorage = await figma.clientStorage.getAsync('dayFromStorage')
         var nightFromStorage = await figma.clientStorage.getAsync('nightFromStorage')
+
+        if (typeof dayFromStorage === 'undefined') {
+            dayFromStorage = day;
+            // console.log(dayFromStorage)
+        }
 
         if (typeof publicStyles === 'undefined' && localStyles.length == 0) {
             figma.closePlugin('😶 This document does not have styles');
