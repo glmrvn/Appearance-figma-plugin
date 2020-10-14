@@ -2,17 +2,19 @@
 
 This plugin generates a dark/light mode from your selection.
 The plugin works with external library styles and local styles.
+You can choose styles name identification in settings. By default, the plugin use [day] for light and [night] for dark.
+
 [Link to the Figma plugin page](https://www.figma.com/c/plugin/760927481606931799/Appearance)
 
 <img width="640" alt="image" src="https://i.imgur.com/GSa5vgI.gif">
 
 ## How it works:
-1. Use [day] and [night] in your style names. Example: Style name[day]/ Style name[night].
+1. Use a keyword [day] and [night] in your style names. Example: Style name[day]/ Style name[night].
 2. Apply your color styles.
 3. Select any object, then choose Appearance → Dark mode or Appearance → Light mode.
 
 ## How it works with external library styles:
-1. Open external library file and use [day] and [night] in color style names. Example: Style name[day]/ Style name[night].
+1. Open external library file and use a keyword [day] and [night] in color style names. Example: Style name[day]/ Style name[night].
 2. Publish changes.
 3. Select Appearance → Save styles for saving external color styles to the plugin.
 4. Open any file linked to the library. 
