@@ -245,7 +245,6 @@ if (figma.command == 'light') {
         var localStyles = [...localColorStyles, ...localEffectStyles]
         // console.log(localStyles)
 
-        var importStyles = []
         var days = {}
         var nights = {}
         var daysLocal = {}
@@ -257,12 +256,12 @@ if (figma.command == 'light') {
         if (typeof publicStyles === 'undefined' && localStyles.length == 0) {
             figma.closePlugin('😶 This document does not have styles');
         } else {
-            for (let styleKey of publicStyles) {
-                try {
-                    var singleImportedStyle = await figma.importStyleByKeyAsync(styleKey);
-                    importStyles.push(singleImportedStyle);
-                } catch(error) {}
-            }
+            const importStyles = await Promise.all(
+                publicStyles.map((styleKey) =>
+                    figma.importStyleByKeyAsync(styleKey)
+                        .catch(() => {})
+                )
+            );
 
             var allStyles = [...localStyles, ...importStyles]
             // console.log(allStyles)
