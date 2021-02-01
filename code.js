@@ -131,12 +131,17 @@ if (figma.command == 'dark') {
             figma.closePlugin('😶 This document does not have styles');
 
         } else {
-            const importStyles = await Promise.all(
+            var importStyles = await Promise.all(
                 publicStyles.map((styleKey) =>
                     figma.importStyleByKeyAsync(styleKey)
                         .catch(() => {})
                 )
             );
+
+            if (importStyles[0] == undefined) {
+                // console.log(importStyles)
+                var importStyles = [];
+            }
 
             var allStyles = [...localStyles, ...importStyles]
             // console.log(allStyles)
@@ -256,12 +261,17 @@ if (figma.command == 'light') {
         if (typeof publicStyles === 'undefined' && localStyles.length == 0) {
             figma.closePlugin('😶 This document does not have styles');
         } else {
-            const importStyles = await Promise.all(
+            var importStyles = await Promise.all(
                 publicStyles.map((styleKey) =>
                     figma.importStyleByKeyAsync(styleKey)
                         .catch(() => {})
                 )
             );
+
+            if (importStyles[0] == undefined) {
+                // console.log(importStyles)
+                var importStyles = [];
+            }
 
             var allStyles = [...localStyles, ...importStyles]
             // console.log(allStyles)
