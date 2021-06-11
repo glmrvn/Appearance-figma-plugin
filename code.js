@@ -277,6 +277,7 @@ if (figma.command == 'light') {
 
             var allStyles = [...localStyles, ...importStyles]
             // console.log(allStyles)
+            allStyles = allStyles.filter((style) => style !== undefined);            
 
             //Creating style couples
             for (let paintStyle of allStyles) {
