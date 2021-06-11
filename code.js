@@ -144,6 +144,8 @@ if (figma.command == 'dark') {
             }
 
             var allStyles = [...localStyles, ...importStyles]
+            allStyles = allStyles.filter((style) => style !== undefined);
+
             // console.log(allStyles)
 
             //Creating style couples
