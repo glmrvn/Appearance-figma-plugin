@@ -197,25 +197,21 @@ if (figma.command == 'dark') {
                 frame.strokeStyleId = object[frame.strokeStyleId];
                 counter++;
             }
-            if (
-                frame.effectStyleId &&
-                objectLocal &&
-                objectLocal[frame.effectStyleId.slice(0, 43)]
-            ) {
-                frame.effectStyleId = objectLocal[frame.effectStyleId.slice(0, 43)];
+            if (frame.fillStyleId && objectLocal && objectLocal[frame.fillStyleId]) {
+                frame.fillStyleId = objectLocal[frame.fillStyleId];
                 counter++;
             }
-            if (
-                frame.strokeStyleId &&
-                objectLocal &&
-                objectLocal[frame.strokeStyleId.slice(0, 43)]
-            ) {
-                frame.strokeStyleId = objectLocal[frame.strokeStyleId.slice(0, 43)];
-                counter++;      
+            if (frame.effectStyleId && objectLocal && objectLocal[frame.effectStyleId]) {
+                frame.effectStyleId = objectLocal[frame.effectStyleId];
+                counter++;
+            }
+            if (frame.strokeStyleId && objectLocal && objectLocal[frame.strokeStyleId]) {
+                frame.strokeStyleId = objectLocal[frame.strokeStyleId];
+                counter++;
             }
         }
     }
-    //Checking day colors
+//Checking day colors
     function notDayObjects() {
         if (counter == 0) {
             figma.closePlugin(`😶 Selection does not have style pairs`);
@@ -333,21 +329,17 @@ if (figma.command == 'light') {
                 frame.strokeStyleId = object[frame.strokeStyleId];
                 counter++
             }
-            if (
-                frame.effectStyleId &&
-                objectLocal &&
-                objectLocal[frame.effectStyleId.slice(0, 43)]
-            ) {
-                frame.effectStyleId = objectLocal[frame.effectStyleId.slice(0, 43)];
+            if (frame.fillStyleId && objectLocal && objectLocal[frame.fillStyleId]) {
+                frame.fillStyleId = objectLocal[frame.fillStyleId];
+                counter++
+            }
+            if (frame.effectStyleId && objectLocal && objectLocal[frame.effectStyleId]) {
+                frame.effectStyleId = objectLocal[frame.effectStyleId];
                 counter++;
             }
-            if (
-                frame.strokeStyleId &&
-                objectLocal &&
-                objectLocal[frame.strokeStyleId.slice(0, 43)]
-            ) {
-                frame.strokeStyleId = objectLocal[frame.strokeStyleId.slice(0, 43)];
-                counter++;      
+            if (frame.strokeStyleId && objectLocal && objectLocal[frame.strokeStyleId]) {
+                frame.strokeStyleId = objectLocal[frame.strokeStyleId];
+                counter++
             }
         }
     }
