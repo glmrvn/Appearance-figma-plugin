@@ -160,7 +160,7 @@ if (figma.command == 'dark') {
             }
 
             Object.entries(days).forEach(([name, id]) => {
-                object[id] = nights[name];
+                object[id.slice(0,43)] = nights[name];
                 // object[nights[name]] = id;
             });
     
@@ -185,16 +185,17 @@ if (figma.command == 'dark') {
         }
 
         for (let frame of allSelection) {
-            if (frame.fillStyleId && object && object[frame.fillStyleId]) {
-                frame.fillStyleId = object[frame.fillStyleId];
+
+            if (frame.fillStyleId && object && object[frame.fillStyleId.slice(0,43)]) {
+                frame.fillStyleId = object[frame.fillStyleId.slice(0,43)];
                 counter++;
             }
-            if (frame.effectStyleId && object && object[frame.effectStyleId]) {
-                frame.effectStyleId = object[frame.effectStyleId];
+            if (frame.effectStyleId && object && object[frame.effectStyleId.slice(0,43)]) {
+                frame.effectStyleId = object[frame.effectStyleId.slice(0,43)];
                 counter++;
             }
-            if (frame.strokeStyleId && object && object[frame.strokeStyleId]) {
-                frame.strokeStyleId = object[frame.strokeStyleId];
+            if (frame.strokeStyleId && object && object[frame.strokeStyleId.slice(0,43)]) {
+                frame.strokeStyleId = object[frame.strokeStyleId.slice(0,43)];
                 counter++;
             }
             if (frame.fillStyleId && objectLocal && objectLocal[frame.fillStyleId]) {
