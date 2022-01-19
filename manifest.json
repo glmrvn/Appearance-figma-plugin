@@ -1,6 +1,7 @@
 {
   "name": "Appearance",
   "id": "760927481606931799",
+  "editorType": ["figma"],
   "api": "1.0.0",
   "main": "code.js",
   "ui": "ui.html",
