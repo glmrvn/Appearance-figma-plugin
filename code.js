@@ -186,27 +186,27 @@ if (figma.command == 'dark') {
 
         for (let frame of allSelection) {
 
-            if (frame.fillStyleId && object && object[frame.fillStyleId.slice(0,43)]) {
+            if (frame.fillStyleId !== figma.mixed && frame.fillStyleId && object && object[frame.fillStyleId.slice(0,43)]) {
                 frame.fillStyleId = object[frame.fillStyleId.slice(0,43)];
                 counter++;
             }
-            if (frame.effectStyleId && object && object[frame.effectStyleId.slice(0,43)]) {
+            if (frame.effectStyleId !== figma.mixed && frame.effectStyleId && object && object[frame.effectStyleId.slice(0,43)]) {
                 frame.effectStyleId = object[frame.effectStyleId.slice(0,43)];
                 counter++;
             }
-            if (frame.strokeStyleId && object && object[frame.strokeStyleId.slice(0,43)]) {
+            if (frame.strokeStyleId !== figma.mixed && frame.strokeStyleId && object && object[frame.strokeStyleId.slice(0,43)]) {
                 frame.strokeStyleId = object[frame.strokeStyleId.slice(0,43)];
                 counter++;
             }
-            if (frame.fillStyleId && objectLocal && objectLocal[frame.fillStyleId]) {
+            if (frame.fillStyleId !== figma.mixed && frame.fillStyleId && objectLocal && objectLocal[frame.fillStyleId]) {
                 frame.fillStyleId = objectLocal[frame.fillStyleId];
                 counter++;
             }
-            if (frame.effectStyleId && objectLocal && objectLocal[frame.effectStyleId]) {
+            if (frame.effectStyleId !== figma.mixed && frame.effectStyleId && objectLocal && objectLocal[frame.effectStyleId]) {
                 frame.effectStyleId = objectLocal[frame.effectStyleId];
                 counter++;
             }
-            if (frame.strokeStyleId && objectLocal && objectLocal[frame.strokeStyleId]) {
+            if (frame.strokeStyleId !== figma.mixed && frame.strokeStyleId && objectLocal && objectLocal[frame.strokeStyleId]) {
                 frame.strokeStyleId = objectLocal[frame.strokeStyleId];
                 counter++;
             }
@@ -318,23 +318,23 @@ if (figma.command == 'light') {
         }
 
         for (let frame of allSelection) {
-            if (frame.fillStyleId && object && object[frame.fillStyleId]) {
+            if (frame.fillStyleId !== figma.mixed && frame.fillStyleId && object && object[frame.fillStyleId]) {
                 frame.fillStyleId = object[frame.fillStyleId];
                 counter++
             }
-            if (frame.effectStyleId && object && object[frame.effectStyleId]) {
+            if (frame.effectStyleId !== figma.mixed && frame.effectStyleId && object && object[frame.effectStyleId]) {
                 frame.effectStyleId = object[frame.effectStyleId];
                 counter++;
             }
-            if (frame.strokeStyleId && object && object[frame.strokeStyleId]) {
+            if (frame.strokeStyleId !== figma.mixed && frame.strokeStyleId && object && object[frame.strokeStyleId]) {
                 frame.strokeStyleId = object[frame.strokeStyleId];
                 counter++
             }
-            if (frame.fillStyleId && objectLocal && objectLocal[frame.fillStyleId]) {
+            if (frame.fillStyleId !== figma.mixed && frame.fillStyleId && objectLocal && objectLocal[frame.fillStyleId]) {
                 frame.fillStyleId = objectLocal[frame.fillStyleId];
                 counter++
             }
-            if (frame.effectStyleId && objectLocal && objectLocal[frame.effectStyleId]) {
+            if (frame.effectStyleId !== figma.mixed && frame.effectStyleId && objectLocal && objectLocal[frame.effectStyleId]) {
                 frame.effectStyleId = objectLocal[frame.effectStyleId];
                 counter++;
             }
