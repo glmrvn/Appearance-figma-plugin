@@ -8,18 +8,26 @@ var objectLocal = {};
 var publicEffectStyles;
 var allEffects;
 
+const storageKeys = {
+    ALL_COLORS: 'allColors',
+    ALL_EFFECTS: 'allEffects',
+    DAY: 'dayFromStorage',
+    NIGHT: 'nightFromStorage',
+}
+
+const sliceId = (id) => id.slice(0, id.lastIndexOf(',') + 1)
+
 setNamesToStorage()
 async function setNamesToStorage() {
-    var dayFromStorage = await figma.clientStorage.getAsync('dayFromStorage')
-    var nightFromStorage = await figma.clientStorage.getAsync('nightFromStorage')
+    var dayFromStorage = await figma.clientStorage.getAsync(storageKeys.DAY)
+    var nightFromStorage = await figma.clientStorage.getAsync(storageKeys.NIGHT)
 
     if (typeof dayFromStorage === 'undefined') {
-        await figma.clientStorage.setAsync('dayFromStorage', day)
+        await figma.clientStorage.setAsync(storageKeys.DAY, day)
     }
     if (typeof nightFromStorage === 'undefined') {
-        await figma.clientStorage.setAsync('nightFromStorage', night)
+        await figma.clientStorage.setAsync(storageKeys.NIGHT, night)
     }
-    // console.log(dayFromStorage)
 }
 
 // NAME SETTINGS UI
@@ -56,8 +64,6 @@ if (figma.command == 'name_settings_ui') {
         if (msg.type === 'clearStorage') {
             await figma.clientStorage.setAsync('dayFromStorage', day)
             await figma.clientStorage.setAsync('nightFromStorage', night)
-            // await figma.clientStorage.setAsync('dayFromStorage')
-            // await figma.clientStorage.setAsync('nightFromStorage')
             // await figma.clientStorage.setAsync('allColors')
             // await figma.clientStorage.setAsync('allEffects')
             figma.closePlugin('😶 All settings were reset');
@@ -80,154 +86,131 @@ if (figma.command == 'get_colors') {
         }
     
         async function colorsNumber() {
-            var allColors = await figma.clientStorage.getAsync('allColors')
-            // console.log(allColors.length)
+            var allColors = await figma.clientStorage.getAsync('allColors') || []
     
             if (allColors.length > 0){
-                figma.closePlugin(`👌 Styles saved`);
+                figma.closePlugin(`👌 Styles saved`)
             } else {
-                figma.closePlugin('😶 You don`t have saved styles');
+                figma.closePlugin('😶 You don`t have saved styles')
             }
         }
     }
 }
 
+async function getPaintsNew() {
+    const publicColorStyles = await figma.clientStorage.getAsync(storageKeys.ALL_COLORS) || []
+    const publicEffectStyles = await figma.clientStorage.getAsync(storageKeys.ALL_EFFECTS) || []
+    
+    const publicStyles = [...publicColorStyles, ...publicEffectStyles]
+
+    const localColorStyles = figma.getLocalPaintStyles()
+    const localEffectStyles = figma.getLocalEffectStyles()
+    const localStyles = [...localColorStyles, ...localEffectStyles]
+
+    const days = {}
+    const nights = {}
+
+    // getting identificator words
+    const dayFromStorage = await figma.clientStorage.getAsync(storageKeys.DAY) || day
+    const nightFromStorage = await figma.clientStorage.getAsync(storageKeys.NIGHT) || night
+
+    if (typeof publicStyles.length == 0 && localStyles.length == 0) {
+        figma.closePlugin('😶 This document does not have styles')
+    } else {
+        let importStyles = await Promise.all(
+            publicStyles.map((styleKey) =>
+                figma.importStyleByKeyAsync(styleKey)
+                    .catch(() => {})
+            )
+        )
+        if (importStyles[0] == undefined) importStyles = []
+
+        const allStyles = [...localStyles, ...importStyles]
+
+        //Creating style couples
+        for (let paintStyle of allStyles) {
+            let { name, id } = paintStyle
+            
+            if (name.includes(nightFromStorage)) {
+                const key = name.replace(nightFromStorage, '')
+                nights[key] = id
+            } else if (name.includes(dayFromStorage)) {
+                const key = name.replace(dayFromStorage, '')
+                days[key] = id
+            }
+        }
+
+        Object.entries(days).forEach(([name, id]) => {
+            object[sliceId(id)] = nights[name]
+        })
+
+        Object.entries(days).forEach(([name, id]) => {
+            objectLocal[sliceId(id)] = nights[name]
+        })
+        console.log(objectLocal)
+    }
+}
+
 // SELECTED DARK MODE
 if (figma.command == 'dark') {
-
-    async function getPaints() {
-        var publicColorStyles = await figma.clientStorage.getAsync('allColors');
-        var publicEffectStyles = await figma.clientStorage.getAsync('allEffects');
-
-        if (typeof publicColorStyles === 'undefined') {
-            await figma.clientStorage.setAsync('allColors', "")
-            // console.log(publicColorStyles)
-        }
-        if (typeof publicEffectStyles === 'undefined') {
-            await figma.clientStorage.setAsync('allEffects', "")
-        } else {
-            var publicStyles = [...publicColorStyles, ...publicEffectStyles]
-            // console.log(publicColorStyles)
-        }
-
-        var localColorStyles = figma.getLocalPaintStyles();
-        var localEffectStyles = figma.getLocalEffectStyles();
-        var localStyles = [...localColorStyles, ...localEffectStyles]
-        // console.log(localStyles)
-
-        var days = {}
-        var nights = {}
-
-        // getting identificator words
-        var dayFromStorage = await figma.clientStorage.getAsync('dayFromStorage')
-        var nightFromStorage = await figma.clientStorage.getAsync('nightFromStorage')
-
-        if (typeof dayFromStorage === 'undefined') {
-            dayFromStorage = day;
-            // console.log(dayFromStorage)
-        }
-
-        if (typeof publicStyles === 'undefined' && localStyles.length == 0) {
-            figma.closePlugin('😶 This document does not have styles');
-
-        } else {
-            var importStyles = await Promise.all(
-                publicStyles.map((styleKey) =>
-                    figma.importStyleByKeyAsync(styleKey)
-                        .catch(() => {})
-                )
-            );
-
-            if (importStyles[0] == undefined) {
-                // console.log(importStyles)
-                var importStyles = [];
-            }
-
-            var allStyles = [...localStyles, ...importStyles]
-            // console.log(allStyles)
-
-            //Creating style couples
-            for (let paintStyle of allStyles) {
-                const name = paintStyle.name
-                const id = paintStyle.id
-                if (name.includes(nightFromStorage)) {
-                    const key = name.replace(nightFromStorage, '');
-                    nights[key] = id;
-                } else if (name.includes(dayFromStorage)) {
-                    const key = name.replace(dayFromStorage, '');
-                    days[key] = id;
-                }
-            }
-
-            Object.entries(days).forEach(([name, id]) => {
-                object[id.slice(0,43)] = nights[name];
-                // object[nights[name]] = id;
-            });
-    
-            Object.entries(days).forEach(([name, id]) => {
-                objectLocal[id.slice(0,43)] = nights[name];
-            });
-        }
-    }
-
-// Changing colors
+    // Changing colors
     function findSelectedFrames() {
         if (figma.currentPage.selection.length == 0) {
-            figma.closePlugin("🤔 No object selected. Please select any object");
-
+            figma.closePlugin("🤔 No object selected. Please select any object")
         } else {
+            let allSelection
             try {
-                var allSelection = figma.currentPage.selection[0].findAll();
+                allSelection = figma.currentPage.selection[0].findAll()
             } catch(error) {
-                var allSelection = [];
+                allSelection = []
             }
-            allSelection.unshift(figma.currentPage.selection[0]);
-        }
 
-        for (let frame of allSelection) {
+            allSelection.unshift(figma.currentPage.selection[0])
 
-            if (frame.fillStyleId !== figma.mixed && frame.fillStyleId && object && object[frame.fillStyleId.slice(0,43)]) {
-                frame.fillStyleId = object[frame.fillStyleId.slice(0,43)];
-                counter++;
-            }
-            if (frame.effectStyleId !== figma.mixed && frame.effectStyleId && object && object[frame.effectStyleId.slice(0,43)]) {
-                frame.effectStyleId = object[frame.effectStyleId.slice(0,43)];
-                counter++;
-            }
-            if (frame.strokeStyleId !== figma.mixed && frame.strokeStyleId && object && object[frame.strokeStyleId.slice(0,43)]) {
-                frame.strokeStyleId = object[frame.strokeStyleId.slice(0,43)];
-                counter++;
-            }
-            if (frame.fillStyleId !== figma.mixed && frame.fillStyleId && objectLocal && objectLocal[frame.fillStyleId]) {
-                frame.fillStyleId = objectLocal[frame.fillStyleId];
-                counter++;
-            }
-            if (frame.effectStyleId !== figma.mixed && frame.effectStyleId && objectLocal && objectLocal[frame.effectStyleId]) {
-                frame.effectStyleId = objectLocal[frame.effectStyleId];
-                counter++;
-            }
-            if (frame.strokeStyleId !== figma.mixed && frame.strokeStyleId && objectLocal && objectLocal[frame.strokeStyleId]) {
-                frame.strokeStyleId = objectLocal[frame.strokeStyleId];
-                counter++;
+            for (let frame of allSelection) {
+                if (frame.fillStyleId !== figma.mixed && frame.fillStyleId && object && object[sliceId(frame.fillStyleId)]) {
+                    frame.fillStyleId = object[sliceId(frame.fillStyleId)]
+                    counter++
+                }
+                if (frame.effectStyleId !== figma.mixed && frame.effectStyleId && object && object[sliceId(frame.effectStyleId)]) {
+                    frame.effectStyleId = object[sliceId(frame.effectStyleId)]
+                    counter++
+                }
+                if (frame.strokeStyleId !== figma.mixed && frame.strokeStyleId && object && object[sliceId(frame.strokeStyleId)]) {
+                    frame.strokeStyleId = object[sliceId(frame.strokeStyleId)]
+                    counter++
+                }
+                if (frame.fillStyleId !== figma.mixed && frame.fillStyleId && objectLocal && objectLocal[frame.fillStyleId]) {
+                    frame.fillStyleId = objectLocal[frame.fillStyleId]
+                    counter++
+                }
+                if (frame.effectStyleId !== figma.mixed && frame.effectStyleId && objectLocal && objectLocal[frame.effectStyleId]) {
+                    frame.effectStyleId = objectLocal[frame.effectStyleId]
+                    counter++
+                }
+                if (frame.strokeStyleId !== figma.mixed && frame.strokeStyleId && objectLocal && objectLocal[frame.strokeStyleId]) {
+                    frame.strokeStyleId = objectLocal[frame.strokeStyleId]
+                    counter++
+                }
             }
         }
     }
-//Checking day colors
+
+    //Checking day colors
     function notDayObjects() {
         if (counter == 0) {
-            figma.closePlugin(`😶 Selection does not have style pairs`);
+            figma.closePlugin(`😶 Selection does not have style pairs`)
         }
     }
 
-    getPaints().then(() => {
-        findSelectedFrames();
-        return 1;
+    getPaintsNew().then(() => {
+        findSelectedFrames()
+        return 1
     }
     ).then(() => {
-        notDayObjects();
+        notDayObjects()
     }
-    ).then(() => figma.closePlugin(`🤘🌗 Dark theme created!`));
-
+    ).then(() => figma.closePlugin('🤘🌗 Dark theme created!'))
 }
 
 // SELECTED LIGHT MODE
