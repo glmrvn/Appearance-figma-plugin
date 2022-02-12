@@ -1,5 +1,5 @@
-var day = "[day]"
-var night = "[night]"
+var day = '[day]'
+var night = '[night]'
 var allSelection
 var colorsArray = []
 var counter = 0
@@ -84,9 +84,9 @@ if (figma.command == 'get_colors') {
             var allColors = await figma.clientStorage.getAsync(storageKeys.ALL_COLORS) || []
     
             if (allColors.length > 0){
-                figma.closePlugin(`👌 Styles saved`)
+                figma.closePlugin('👌 Styles saved')
             } else {
-                figma.closePlugin('😶 You don`t have saved styles')
+                figma.closePlugin('😶 You don\'t have saved styles')
             }
         }
     }
@@ -154,7 +154,7 @@ async function collectPaintStyles(toNight) {
 
 function applySwappedStyles() {
     if (figma.currentPage.selection.length == 0) {
-        figma.closePlugin("🤔 No object selected. Please select any object")
+        figma.closePlugin('🤔 No object selected. Please select any object')
     } else {
         let allSelection
         try {
@@ -196,7 +196,7 @@ function applySwappedStyles() {
 
 function checkIfAnyStylesSwapped() {
     if (counter == 0) {
-        figma.closePlugin(`😶 Selection does not have style pairs`)
+        figma.closePlugin('😶 Selection does not have style pairs')
     }
 }
 
@@ -219,5 +219,5 @@ if (figma.command == 'light') {
             return 1
         })
         .then(() => { checkIfAnyStylesSwapped() })
-        .then(() => figma.closePlugin(`🤘🌖 Light theme created!`))
+        .then(() => figma.closePlugin('🤘🌖 Light theme created!'))
 }
