@@ -169,15 +169,12 @@ function applySwappedStyles() {
                if (!visited.has(node.id)) {
                   visited.add(node.id)
                   allSelection.push(node)
-
                   try { node.findAll().forEach((sel) => { stack.push(sel) }) } 
                   catch (error) {}
                 }
             }
        }
-
-        figma.currentPage.selection.forEach((sel) => { dfs(sel) })
-        allSelection.unshift(figma.currentPage.selection)
+       figma.currentPage.selection.forEach((sel) => { dfs(sel) })
 
         //Changing styles
         for (let frame of allSelection) {
