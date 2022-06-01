@@ -29,7 +29,7 @@ async function initPlugin() {
     }
 }
 
-// NAME SETTINGS UI
+// Settings UI
 if (figma.command == 'name_settings_ui') {
     figma.showUI(__html__, { width: 240, height: 170 })
 
@@ -67,7 +67,7 @@ if (figma.command == 'name_settings_ui') {
     }
 }
 
-// GET LIBRARY COLORS
+// Getting styles
 if (figma.command == 'get_colors') {
     if (figma.getLocalPaintStyles().length == 0){
         figma.closePlugin('😶 This document does not have styles')
@@ -102,7 +102,7 @@ async function collectPaintStyles(toNight) {
     const localEffectStyles = figma.getLocalEffectStyles()
     const localStyles = [...localColorStyles, ...localEffectStyles]
 
-    // getting identificator words
+    // Getting identificator words
     const dayFromStorage = await figma.clientStorage.getAsync(storageKeys.DAY) || day
     const nightFromStorage = await figma.clientStorage.getAsync(storageKeys.NIGHT) || night
 
@@ -117,7 +117,7 @@ async function collectPaintStyles(toNight) {
         )
         if (importStyles[0] == undefined) importStyles = []
 
-        const allStyles = [...localStyles, ...importStyles]
+        const allStyles = [...localStyles, ...importStyles].filter((style) => style !== undefined)
         const days = {}
         const nights = {}
 
@@ -156,15 +156,30 @@ function applySwappedStyles() {
     if (figma.currentPage.selection.length == 0) {
         figma.closePlugin('🤔 No object selected. Please select any object')
     } else {
-        let allSelection
-        try {
-            allSelection = figma.currentPage.selection[0].findAll()
-        } catch(error) {
-            allSelection = []
-        }
 
-        allSelection.unshift(figma.currentPage.selection[0])
+        //Getting all nodes from selection
+        let allSelection = []
+        let visited = new Set()
+        let stack = []
+        
+        const dfs = (node) => {
+            stack.push(node)
+            while (stack.length != 0) {
+               node = stack.pop()
+               if (!visited.has(node.id)) {
+                  visited.add(node.id)
+                  allSelection.push(node)
 
+                  try { node.findAll().forEach((sel) => { stack.push(sel) }) } 
+                  catch (error) {}
+                }
+            }
+       }
+
+        figma.currentPage.selection.forEach((sel) => { dfs(sel) })
+        allSelection.unshift(figma.currentPage.selection)
+
+        //Changing styles
         for (let frame of allSelection) {
             if (frame.fillStyleId !== figma.mixed && frame.fillStyleId && object && object[sliceId(frame.fillStyleId)]) {
                 frame.fillStyleId = object[sliceId(frame.fillStyleId)]
@@ -200,7 +215,7 @@ function checkIfAnyStylesSwapped() {
     }
 }
 
-// SELECTED DARK MODE
+// Dark mode
 if (figma.command == 'dark') {
     collectPaintStyles(true)
         .then(() => {
@@ -211,7 +226,7 @@ if (figma.command == 'dark') {
         .then(() => figma.closePlugin('🤘🌗 Dark theme created!'))
 }
 
-// SELECTED LIGHT MODE
+// Light mode
 if (figma.command == 'light') {
     collectPaintStyles(false)
         .then(() => {
