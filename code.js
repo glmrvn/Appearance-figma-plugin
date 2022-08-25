@@ -15,6 +15,9 @@ const storageKeys = {
 
 const sliceId = (id) => id.slice(0, id.lastIndexOf(',') + 1)
 
+// Skip over invisible nodes and their descendants inside instances for faster performance
+figma.skipInvisibleInstanceChildren = true;
+
 initPlugin()
 
 async function initPlugin() {
