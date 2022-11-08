@@ -152,7 +152,7 @@ async function collectPaintStyles(toNight) {
     }
 }
 
-function applySwappedStyles() {
+async function applySwappedStyles() {
     if (figma.currentPage.selection.length == 0) {
         figma.closePlugin('🤔 No object selected. Please select any object')
     } else {
@@ -178,6 +178,12 @@ function applySwappedStyles() {
 
         //Changing styles
         for (let frame of allSelection) {
+            if (frame.fillStyleId == figma.mixed && frame.type === 'TEXT') {
+                for (let segment of frame.getStyledTextSegments(['fillStyleId']) ) {
+                    frame.setRangeFillStyleId(segment.start, segment.end, object[sliceId(segment.fillStyleId)]);
+                    counter++
+				}
+            }
             if (frame.fillStyleId !== figma.mixed && frame.fillStyleId && object && object[sliceId(frame.fillStyleId)]) {
                 frame.fillStyleId = object[sliceId(frame.fillStyleId)]
                 counter++
@@ -216,8 +222,7 @@ function checkIfAnyStylesSwapped() {
 if (figma.command == 'dark') {
     collectPaintStyles(true)
         .then(() => {
-            applySwappedStyles()
-            return 1
+            return applySwappedStyles()
         })
         .then(() => { checkIfAnyStylesSwapped() })
         .then(() => figma.closePlugin('🤘🌗 Dark theme created!'))
@@ -227,8 +232,7 @@ if (figma.command == 'dark') {
 if (figma.command == 'light') {
     collectPaintStyles(false)
         .then(() => {
-            applySwappedStyles()
-            return 1
+            return applySwappedStyles()
         })
         .then(() => { checkIfAnyStylesSwapped() })
         .then(() => figma.closePlugin('🤘🌖 Light theme created!'))
