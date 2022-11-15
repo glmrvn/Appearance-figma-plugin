@@ -180,8 +180,10 @@ async function applySwappedStyles() {
         for (let frame of allSelection) {
             if (frame.fillStyleId == figma.mixed && frame.type === 'TEXT') {
                 for (let segment of frame.getStyledTextSegments(['fillStyleId']) ) {
-                    frame.setRangeFillStyleId(segment.start, segment.end, object[sliceId(segment.fillStyleId)]);
-                    counter++
+                    if (object[sliceId(segment.fillStyleId)] !== undefined ) {
+                        frame.setRangeFillStyleId(segment.start, segment.end, object[sliceId(segment.fillStyleId)]);
+                        counter++
+                    }
 				}
             }
             if (frame.fillStyleId !== figma.mixed && frame.fillStyleId && object && object[sliceId(frame.fillStyleId)]) {
